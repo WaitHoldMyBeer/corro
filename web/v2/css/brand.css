@@ -1,0 +1,16 @@
+/* Corro brand. One mark: an open C closed by a tick (a statement, and the source that corroborates it).
+   The mark is drawn as a mask, so it takes the accent of whatever theme is on and needs no markup of its own:
+   an element that carries the product name gets it from its class. Source files: web/brand/*.svg.
+   Stands alone (fallback colours), so the provider page and the classic page can link it without design.css. */
+:root {
+  --corro-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17.23 5.3A8.5 8.5 0 1 0 17.23 18.7'/%3E%3Cpath d='M11 12l3 3 6.5-7.5'/%3E%3C/svg%3E");
+}
+/* the mark before a product name: .corro-logo anywhere, .brand on the classic and provider pages */
+.corro-logo::before, .brand::before {
+  content: ""; display: inline-block; width: 1.3em; height: 1.3em; flex: none; background: var(--accent, #1f4fd8);
+  -webkit-mask: var(--corro-mark) center / contain no-repeat; mask: var(--corro-mark) center / contain no-repeat;
+}
+.brand::before { margin-right: .4em; vertical-align: -.28em; }
+.corro-logo { display: inline-flex; align-items: center; gap: .45em; font-size: var(--fs-md, 15px); font-weight: 700; letter-spacing: -.01em; line-height: 1.2; color: var(--n-900, var(--ink, #14181f)); text-decoration: none; }
+/* the same mark as an inline <svg class="corro-mark">, where an element is needed (it follows currentColor) */
+svg.corro-mark { width: 1.3em; height: 1.3em; flex: none; color: var(--accent, #1f4fd8); }

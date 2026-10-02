@@ -1,0 +1,65 @@
+/* The assistant's PDF viewer pane and its files list. Tokens and components of design.css; everything here is prefixed av-. */
+body.v2 {
+  /* ---------------------------------------------------------------- viewer pane (the mount gets .av-open) */
+  .av-open { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; max-width: 50vw; border-left: 1px solid var(--n-200); }
+  .av-viewer { position: relative; flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; min-height: 420px; background: var(--n-0); color: var(--n-900); font-size: var(--fs-md); line-height: var(--lh); animation: v2-fade var(--m-med) var(--ease); }
+  .av-grip { position: absolute; z-index: 2; top: 0; bottom: 0; left: 0; width: 7px; cursor: col-resize; touch-action: none; }
+  .av-grip::after { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 2px; background: transparent; transition: background var(--m-fast); }
+  .av-grip:hover::after, .av-grip:focus-visible::after, .av-dragging .av-grip::after { background: var(--accent); }
+  .av-grip:focus-visible { outline: none; }
+  .av-dragging { user-select: none; }
+  .av-dragging .av-frame { pointer-events: none; }
+
+  .av-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--sp-2) var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--n-200); }
+  .av-head-t { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 200px; }
+  .av-eyebrow, .av-meta { font-size: var(--fs-sm); color: var(--n-500); }
+  .av-meta { font-variant-numeric: tabular-nums; }
+  .av-title { font-size: var(--fs-md); font-weight: 650; overflow-wrap: anywhere; }
+  .av-title:focus { outline: none; }
+  .av-act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-1); }
+
+  .av-body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: auto; background: var(--n-100); }
+  .av-frame { flex: 1 1 auto; width: 100%; min-height: 0; border: 0; background: var(--n-100); }
+
+  .av-wait { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; gap: var(--sp-3); padding: var(--sp-5) var(--sp-4); }
+  .av-wait-t { font-size: var(--fs-sm); color: var(--n-500); }
+  .av-page { width: min(100%, 520px); aspect-ratio: 17 / 22; display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-8) var(--sp-6); background: var(--n-0); border: 1px solid var(--n-200); border-radius: var(--r-xs); box-shadow: var(--e-1); }
+  .av-page > div { height: 12px; flex: none; }
+  .av-page > div:first-child { height: 20px; margin-bottom: var(--sp-3); }
+
+  .av-note { display: flex; flex-direction: column; gap: var(--sp-3); margin: var(--sp-4); padding: var(--sp-4); background: var(--n-0); border: 1px solid var(--n-200); border-radius: var(--r-lg); }
+  .av-note-act { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+  .av-text-host { margin: 0 var(--sp-4) var(--sp-4); }
+  .av-text-host:empty { display: none; }
+  .av-text { list-style: none; margin: 0; padding: var(--sp-2) var(--sp-4); background: var(--n-0); border: 1px solid var(--n-200); border-radius: var(--r-lg); }
+  .av-text-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: var(--sp-3); padding: var(--sp-2) 0; border-bottom: 1px solid var(--n-100); }
+  .av-text-row:last-child { border-bottom: 0; }
+  .av-text-row:has(> .av-text-when:empty) { grid-template-columns: minmax(0, 1fr); }
+  .av-text-when:empty { display: none; }
+  .av-text-when { font-size: var(--fs-sm); color: var(--n-500); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .av-text-what { overflow-wrap: anywhere; }
+  .av-text-amt { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+
+  /* ---------------------------------------------------------------- files list */
+  .av-files-wrap { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+  .av-search { width: 100%; height: var(--ctl-h-sm); padding: 0 10px; font-size: var(--fs-sm); }
+  .av-search[hidden] { display: none; }
+  .av-files { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .av-file { display: flex; align-items: flex-start; gap: var(--sp-1); min-width: 0; border-radius: var(--r-md); }
+  .av-file:hover, .av-file:focus-within { background: var(--n-100); }
+  .av-file-open { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; padding: var(--sp-2); border: 0; border-radius: var(--r-md); background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+  .av-file-open[aria-current="true"] { background: var(--accent-soft); }
+  .av-file-open[aria-current="true"] .av-file-t { color: var(--accent); }
+  .av-file-t { font-size: var(--fs-md); font-weight: 600; overflow-wrap: anywhere; }
+  .av-file-m { font-size: var(--fs-sm); color: var(--n-500); font-variant-numeric: tabular-nums; }
+  .av-file-act { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin: var(--sp-1) var(--sp-1) 0 0; }
+  .av-file-more { width: 24px; height: 24px; margin-right: 4px; border: 0; border-radius: var(--r-sm); background: none; color: var(--n-500); font-size: 16px; line-height: 1; cursor: pointer; opacity: 0; transition: opacity var(--m-fast); }
+  .av-file:hover .av-file-more, .av-file:focus-within .av-file-more { opacity: 1; }
+  .av-file-more:hover { background: var(--bad-soft); color: var(--bad); }
+  .av-file.asking { align-items: center; }
+  .av-files-note:empty { display: none; }
+  .av-files-note .empty, .av-files-note .error { font-size: var(--fs-sm); padding: var(--sp-2); }
+  .av-files-skel { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-2); }
+  .av-files-skel > div { height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { body.v2 .av-viewer { animation: none; } }

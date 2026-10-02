@@ -1,0 +1,19 @@
+/* Dashboard templates dialog. Tokens from design.css; thumbnails are static CSS boxes, never live cards. */
+body.v2 .dt-dlg .dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--sp-3, 12px); }
+body.v2 .dt-tile { border: 1px solid var(--n-200, #dde1e7); border-radius: var(--r-lg, 12px); padding: var(--sp-3, 12px) var(--sp-4, 16px); display: flex; flex-direction: column; gap: var(--sp-2, 8px); background: var(--n-0, #fff); }
+body.v2 .dt-tile-t { display: flex; justify-content: space-between; align-items: baseline; gap: var(--sp-2, 8px); font-size: var(--fs-md, 15px); }
+body.v2 .dt-n { font-size: var(--fs-sm, 13px); color: var(--n-500, #566070); white-space: nowrap; }
+body.v2 .dt-about { margin: 0; font-size: var(--fs-sm, 13px); color: var(--n-500, #566070); min-height: 2.8em; }
+body.v2 .dt-actions { display: flex; gap: var(--sp-2, 8px); flex-wrap: wrap; align-items: center; }
+body.v2 .dt-prev { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 9px; gap: 3px; padding: var(--sp-2, 8px); background: var(--n-50, #f4f5f7); border-radius: var(--r-md, 8px); height: 96px; overflow: hidden; align-content: start; }
+body.v2 .dt-box { background: var(--n-0, #fff); border: 1px solid var(--n-300, #c9cfd8); border-radius: var(--r-xs); }
+body.v2 .dt-box.s { grid-column: span 1; }
+body.v2 .dt-box.m { grid-column: span 2; }
+body.v2 .dt-box.l { grid-column: span 3; grid-row: span 2; }
+body.v2 .dt-save { display: flex; gap: var(--sp-2, 8px); align-items: center; flex-wrap: wrap; margin-top: var(--sp-3, 12px); }
+body.v2 .dt-save input { flex: 1 1 200px; max-width: 320px; }
+body.v2 .dt-out { min-height: 0; }
+body.v2 .dt-prop { display: flex; flex-direction: column; gap: var(--sp-3, 12px); border: 1px solid var(--n-200, #dde1e7); border-radius: var(--r-lg, 12px); padding: var(--sp-4, 16px); }
+body.v2 .v2-describe textarea { width: 100%; box-sizing: border-box; resize: vertical; }
+body.v2 .dt-snack { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; display: flex; gap: var(--sp-3, 12px); align-items: center; background: var(--n-900, #14181f); color: var(--n-0, #fff); padding: var(--sp-3, 12px) var(--sp-4, 16px); border-radius: var(--r-lg, 12px); box-shadow: var(--e-3, 0 8px 28px rgba(20, 24, 31, .3)); font-size: var(--fs-sm, 13px); max-width: min(560px, 92vw); }
+body.v2 .dt-snack .btn { color: var(--n-900, #14181f); }

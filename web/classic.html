@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corro</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="v2/css/brand.css">
+</head>
+<body>
+<header class="top">
+  <span class="brand">Corro</span>
+  <label class="picker"><span class="sr">Matter</span><select id="matter" aria-label="Matter"></select></label>
+  <nav class="tabs" aria-label="Views">
+    <a href="#case" id="tab-case">Case</a>
+    <a href="#write" id="tab-write">Write</a>
+    <a href="#share" id="tab-share">Share with providers</a>
+  </nav>
+  <span id="progress" class="progress" hidden></span>
+  <span class="grow"></span>
+  <span id="syncline" class="small muted" role="status"></span>
+  <a class="small" href="/v2/" title="Open the new interface">New interface</a>
+  <button id="digest" class="digest" type="button" aria-expanded="false"></button>
+  <button id="sync" class="btn" type="button">Re-sync from Clio</button>
+</header>
+<div id="digest-panel" class="digest-panel" hidden></div>
+<main id="view"><p class="muted pad">Loading...</p></main>
+<script type="module" src="js/attorney.js"></script>
+</body>
+</html>

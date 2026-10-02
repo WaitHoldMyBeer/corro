@@ -1,0 +1,88 @@
+/* The AI-ifier: the round handle, the one blue highlight that follows it, and the pick-several bar.
+   Everything lives under .aiifier; nothing here styles the page. Tokens come from design.css. */
+.aiifier { --ai: var(--accent, #1f4fd8); }   /* tints are mixed from it, so a theme's accent carries through */
+
+/* one fixed layer for the highlight and the picked boxes: its own layout and paint island, never hit-tested.
+   It sits above the page and below the assistant panel (z 60), so a highlight never draws over the chat. */
+.aiifier-layer { position: fixed; inset: 0; z-index: 55; pointer-events: none; overflow: hidden; contain: strict; }
+.aiifier-hl, .aiifier-sel { position: absolute; left: 0; top: 0; width: 0; height: 0; border-radius: var(--r-lg, 12px); will-change: transform; }
+.aiifier-hl {
+  opacity: 0; transition: opacity var(--m-fast, 120ms) ease-out;
+  background: color-mix(in srgb, var(--ai) 7%, transparent);
+  box-shadow: 0 0 0 2px var(--ai), 0 0 0 7px color-mix(in srgb, var(--ai) 14%, transparent), 0 10px 32px color-mix(in srgb, var(--ai) 16%, transparent);
+}
+.aiifier-hl.on { opacity: 1; }
+.aiifier-tag {
+  position: absolute; left: -2px; bottom: calc(100% + 9px); display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px;
+  max-width: min(380px, 70vw); border-radius: var(--r-sm, 6px); background: var(--ai); color: var(--on-accent, #fff); font-size: var(--fs-sm, 13px); font-weight: 600; line-height: 24px; white-space: nowrap;
+  box-shadow: var(--e-2, 0 6px 18px rgba(20, 24, 31, .07));
+}
+.aiifier-tag b { font-weight: 500; opacity: .82; }
+.aiifier-tag b::first-letter { text-transform: uppercase; }
+.aiifier-tag span { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.aiifier-tag span:empty { display: none; }
+.aiifier-hl.in .aiifier-tag { bottom: auto; top: 6px; left: 6px; }
+.aiifier-sel { background: color-mix(in srgb, var(--ai) 10%, transparent); box-shadow: 0 0 0 2px var(--ai); }
+.aiifier-sel::after {
+  content: "\2713"; position: absolute; right: -9px; top: -9px; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--ai); color: var(--on-accent, #fff); font-size: var(--fs-sm, 13px); font-weight: 700; line-height: 1; box-shadow: 0 0 0 2px var(--n-0, #fff);
+}
+@keyframes aiifier-drop {
+  0% { opacity: 1; background: color-mix(in srgb, var(--ai) 26%, transparent); }
+  100% { opacity: 0; background: transparent; box-shadow: 0 0 0 2px transparent, 0 0 0 16px transparent, 0 10px 32px transparent; }
+}
+.aiifier-hl.drop, .aiifier-sel.drop { animation: aiifier-drop var(--m-slow, 220ms) var(--ease, ease-out) forwards; }
+.aiifier-hl.drop .aiifier-tag, .aiifier-sel.drop::after { opacity: 0; }
+
+/* the handle: small and quiet at rest, in the window's bottom-left corner, inside the navigation column directly
+   above Settings. --ai-left and --ai-bottom are measured from the column at mount and on resize (index.js, seat);
+   when the column has no free band above Settings it sits at the right end of the Settings row instead. */
+.aiifier-btn {
+  position: fixed; left: var(--ai-left, 184px); bottom: var(--ai-bottom, 14px); z-index: 95; width: 32px; height: 32px; padding: 0; border-radius: 50%;
+  display: grid; place-items: center; color: var(--ai); background: var(--n-0, #fff); border: 1px solid var(--n-300, #cdd2da); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+  box-shadow: var(--e-1, 0 1px 2px rgba(20, 24, 31, .05));
+  will-change: transform;
+}
+/* the glyph: accent on the quiet disc, the theme's on-accent colour once the disc is filled */
+.aiifier > button.aiifier-btn.aiifier-btn { color: var(--ai); }
+.aiifier.dragging > button.aiifier-btn.aiifier-btn, .aiifier.picking > button.aiifier-btn.aiifier-btn { color: var(--on-accent, #fff); }
+.aiifier-btn::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; }   /* 44px hit area on a 32px control */
+.aiifier-btn svg { width: 18px; height: 18px; pointer-events: none; }
+.aiifier-btn:hover { border-color: var(--ai); background: var(--accent-soft, #e9effd); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ai) 12%, transparent); }
+.aiifier-btn:focus-visible { outline: 2px solid var(--ai); outline-offset: 3px; border-radius: 50%; }
+/* in the hand it is the one loud thing on the page */
+.aiifier.dragging .aiifier-btn { pointer-events: none; cursor: grabbing; color: var(--on-accent, #fff); background: var(--ai); border-color: var(--ai); transition: none; box-shadow: var(--e-1), 0 14px 32px color-mix(in srgb, var(--ai) 36%, transparent); }
+.aiifier-btn.back { transition: transform var(--m-slow, 220ms) var(--ease, cubic-bezier(.2, .7, .2, 1)); }   /* springs home */
+.aiifier.picking .aiifier-btn { color: var(--on-accent, #fff); background: var(--ai); border-color: var(--ai); box-shadow: 0 0 0 3px var(--n-0, #fff), 0 0 0 5px var(--ai); }
+.aiifier.settling .aiifier-btn, .aiifier.settling .aiifier-hint { opacity: 0; }
+
+/* what the handle is for: shown on hover and focus, and for a moment after a plain click */
+.aiifier-hint {
+  position: fixed; left: calc(var(--ai-left, 184px) + 44px); bottom: calc(var(--ai-bottom, 14px) - 4px); z-index: 95; width: max-content; max-width: 300px; padding: 8px 12px; border-radius: var(--r-md, 8px);
+  background: var(--n-900, #14181f); color: var(--n-0, #fff); font-size: var(--fs-sm, 13px); line-height: 1.4; box-shadow: var(--e-2, 0 6px 18px rgba(20, 24, 31, .07));
+  pointer-events: none; opacity: 0; transform: translateX(-6px); transition: opacity var(--m-fast, 120ms), transform var(--m-med, 200ms) var(--ease, ease-out);
+}
+.aiifier-btn:hover + .aiifier-hint, .aiifier-btn:focus-visible + .aiifier-hint, .aiifier-hint.show { opacity: 1; transform: none; }
+.aiifier.dragging .aiifier-hint, .aiifier.picking .aiifier-hint { opacity: 0; }
+
+/* pick several: a floating bar, bottom centre */
+.aiifier-bar {
+  position: fixed; left: 50%; bottom: var(--sp-5, 20px); z-index: 96; display: none; align-items: center; gap: var(--sp-3, 12px); padding: 8px 8px 8px 16px; translate: -50% 0;
+  background: var(--n-0, #fff); border: 1px solid var(--n-200, #e2e5ea); border-radius: var(--r-lg, 12px); box-shadow: var(--e-3, 0 28px 72px rgba(20, 24, 31, .26));
+  font-size: var(--fs-sm, 13px); color: var(--n-600, #454d5b); white-space: nowrap;
+}
+.aiifier.picking .aiifier-bar { display: inline-flex; animation: v2-rise var(--m-med, 200ms) var(--ease, ease-out); }
+.aiifier-bar kbd { font: inherit; font-size: var(--fs-sm, 13px); padding: 1px 6px; border: 1px solid var(--n-300, #cdd2da); border-radius: var(--r-xs); background: var(--n-25, #fafbfc); color: var(--n-600, #454d5b); margin-left: 6px; }
+.aiifier-live { position: fixed; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* set on <html> for the length of a drag or a pick, never on page elements */
+html.aiifier-dragging { user-select: none; -webkit-user-select: none; }
+html.aiifier-dragging, html.aiifier-dragging * { cursor: grabbing !important; }
+html.aiifier-picking, html.aiifier-picking * { cursor: crosshair !important; }
+html.aiifier-picking .aiifier-bar, html.aiifier-picking .aiifier-bar * { cursor: default !important; }
+html.aiifier-picking .aiifier-bar button { cursor: pointer !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aiifier-btn.back, .aiifier-hl, .aiifier-hint { transition-duration: 1ms; }
+  .aiifier-hl.drop, .aiifier-sel.drop { animation-duration: 1ms; }
+}

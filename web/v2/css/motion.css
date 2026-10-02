@@ -1,0 +1,82 @@
+/* Corro v2: one motion language. Load last, after themes.css.
+
+   The rules of the house:
+   1. Only transform and opacity move. Colour, border and shadow changes are instant; a shadow that must appear
+      is a layer whose opacity changes. Nothing here can cause layout or a repaint of anything but its own layer.
+   2. Three durations (120, 180, 220 ms) and one easing, all tokens.
+   3. Nothing animates on scroll, nothing delays input: every animation is decorative and may be interrupted.
+   4. prefers-reduced-motion turns all of it off. */
+
+@media (prefers-reduced-motion: no-preference) {
+  :root { --m-fast: 120ms; --m-med: 180ms; --m-slow: 220ms; --ease: cubic-bezier(.2, .7, .2, 1); --m-lift: -2px; --m-press: .975; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :root { --m-lift: 0px; --m-press: 1; }
+  body.v2 *, body.v2 *::before, body.v2 *::after, body.v2 ::backdrop { animation: none !important; transition: none !important; }
+}
+
+@keyframes m-rise { from { opacity: 0; transform: translateY(6px); } }
+@keyframes m-fade { from { opacity: 0; } }
+@keyframes m-pop { from { opacity: 0; transform: translateY(6px) scale(.985); } }
+@keyframes m-slide { from { opacity: 0; transform: translateX(28px); } }
+@keyframes m-out { to { opacity: 0; transform: translateY(6px); } }
+@keyframes m-sheen { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+
+/* Rule 1, enforced for every sheet in the shell, including styles a card injects: whatever a rule lists in
+   `transition`, only transform and opacity are ever interpolated, on the one easing. */
+body.v2 *, body.v2 *::before, body.v2 *::after { transition-property: transform, opacity !important; transition-timing-function: var(--ease) !important; }
+
+body.v2 {
+  /* ---------------------------------------------------------------- cards: lift on hover, shadow as a fading layer */
+  .v2-card { transition: transform var(--m-fast), opacity var(--m-fast); }
+  .v2-card::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; box-shadow: var(--e-2); opacity: 0; pointer-events: none; transition: opacity var(--m-med); }
+  .v2-card:hover, .v2-card:has(:focus-visible) { transform: translateY(var(--m-lift)); box-shadow: none; }
+  .v2-card:hover::after, .v2-card:has(:focus-visible)::after { opacity: 1; }
+  /* the strip the card rose out of still counts as the card, so the pointer at its lower edge does not flicker */
+  .v2-card:hover::before { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 4px; }
+  /* arrival: theme.js marks cards that are new to the grid, so a reorder or a refresh does not replay it */
+  .v2-card.m-arrive { animation: m-rise var(--m-slow) var(--ease) backwards; animation-delay: calc(var(--m-i, 0) * 22ms); }
+
+  /* drag: the card being carried recedes, the slot under the pointer answers */
+  .v2-card.dragging { opacity: .4; transform: scale(.98); }
+  .v2-card.over { transform: scale(.985); }
+  .v2-card-h .grip { cursor: grab; }
+  .v2-card-h .grip:active { cursor: grabbing; }
+
+  /* ---------------------------------------------------------------- pressed: everything clickable gives a little */
+  .btn, .mc-btn, .chip, .icon-btn, .seg button, .ev-seg button, .v2-gal-item, .th-opt, .th-quick > button,
+  #v2-navlist a, .v2-nav-foot a, .ev-side, .plist button, .drawer-tabs button, .gx-chip, .gx-zoom button { transition: transform var(--m-fast), opacity var(--m-fast); }
+  .btn:active:not(:disabled), .mc-btn:active:not(:disabled) { transform: translateY(1px) scale(var(--m-press)); }
+  .chip:active, .icon-btn:active, .seg button:active, .ev-seg button:active, .th-quick > button:active,
+  .drawer-tabs button:active, .gx-chip:active, .gx-zoom button:active, .plist button:active { transform: scale(var(--m-press)); }
+  .v2-gal-item:active:not(:disabled), .th-opt:active, .ev-side:active:not(:disabled) { transform: scale(.985); }
+  #v2-navlist a:active, .v2-nav-foot a:active { transform: scale(.985); }
+  /* the gallery tile and the theme tile lift like a card does */
+  .v2-gal-item:hover:not(:disabled):not(:active), .th-opt:hover:not(:active) { transform: translateY(-1px); }
+
+  /* ---------------------------------------------------------------- focus: one ring, instant, never animated */
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .th-opt:focus-visible, .th-quick > button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-md); }
+
+  /* ---------------------------------------------------------------- skeleton: a sheen that slides, drawn once and moved */
+  span.v2-skel, .v2-skel > div:not(.v2-skel-grid), .v2-skel-grid > div { position: relative; overflow: hidden; background: var(--n-100); animation: none; }
+  .v2-hero .v2-hero-empty { overflow: hidden; background: var(--n-0); animation: none; }
+  span.v2-skel::after, .v2-skel > div:not(.v2-skel-grid)::after, .v2-skel-grid > div::after, .v2-hero .v2-hero-empty::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, var(--n-50), transparent); animation: m-sheen var(--m-loop, 1.4s) linear infinite;
+  }
+
+  /* ---------------------------------------------------------------- arrivals: pages, panels, drawers, toasts */
+  .v2-view > * { animation: m-fade var(--m-med) var(--ease) both; }
+  dialog.v2-dlg[open], dialog.signin-dlg[open] { animation: m-pop var(--m-med) var(--ease); }
+  dialog.drawer[open] { animation: m-slide var(--m-slow) var(--ease); }
+  dialog.v2-dlg::backdrop, dialog.drawer::backdrop, dialog.signin-dlg::backdrop { animation: m-fade var(--m-med) var(--ease); }
+  .v2-results:not([hidden]), .th-pop:not([hidden]), .ed-card, .digest-panel { animation: m-pop var(--m-fast) var(--ease); }
+  .nw-body, .cm-body:not([hidden]), .cal-side > * { animation: m-fade var(--m-med) var(--ease); }
+  /* in, then out just before util.js removes it (5 s; errors stay 9 s) */
+  .toast { animation: m-rise var(--m-med) var(--ease) backwards, m-out var(--m-med) var(--ease) 4800ms forwards; }
+  .toast.error { animation: m-rise var(--m-med) var(--ease) backwards, m-out var(--m-med) var(--ease) 8800ms forwards; }
+
+  /* the progress fill is scaled, not resized, so it can ease on the compositor */
+  .progress .fill { transition: transform var(--m-slow); }
+}

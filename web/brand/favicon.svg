@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- The mark in white on an accent tile; the heavier stroke keeps it readable at 16 px. -->
+  <rect width="32" height="32" rx="7" fill="#1f4fd8"/>
+  <g fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21.2 8.9A9 9 0 1 0 21.2 23.1"/>
+    <path d="M14.8 16l3.2 3.3 6.6-7.8"/>
+  </g>
+</svg>

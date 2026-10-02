@@ -1,0 +1,81 @@
+/* Negotiation tab. Tokens from design.css; nothing here sets a colour of its own. */
+.ng { display: grid; gap: var(--sp-5); max-width: 1080px; }
+.ng .ng-standing { margin: 0; font-size: var(--fs-sm); }
+.ng .ng-card h2 { margin: 0 0 var(--sp-1); font-size: var(--fs-lg); }
+.ng .ng-card > p { margin: 0 0 var(--sp-3); }
+
+.ng-figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
+.ng .ng-figs-wrap > p { margin: var(--sp-2) 0 0; }
+.ng-fig-btn { display: grid; gap: var(--sp-1); justify-items: start; width: 100%; text-align: left; cursor: pointer; font: inherit; color: inherit;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--e-1); padding: var(--sp-4) var(--sp-5); }
+.ng-fig-btn:hover { border-color: var(--n-400); }
+.ng-fig-btn:focus-visible { outline: 3px solid var(--accent-ring); outline-offset: 2px; }
+.ng-fig.is-open .ng-fig-btn { border-color: var(--accent); }
+.ng-fig-label { color: var(--muted); font-size: var(--fs-sm); }
+.ng-fig-value { font-size: var(--fs-fig); line-height: var(--lh-tight); font-weight: 650; font-variant-numeric: tabular-nums; }
+.ng-trace { margin-top: var(--sp-3); }
+.ng-trace-list { list-style: none; margin: var(--sp-2) 0 0; padding: 0; display: grid; gap: var(--sp-1); }
+.ng-trace-list li { display: grid; grid-template-columns: minmax(0, 1.6fr) auto auto minmax(0, 1.4fr); gap: var(--sp-3); align-items: center; padding: var(--sp-1) 0; border-top: 1px solid var(--line-soft); }
+.ng-trace-value { font-variant-numeric: tabular-nums; font-weight: 600; }
+
+.ng-zones { display: grid; gap: var(--sp-2); }
+.ng-zone { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--sp-1) var(--sp-4); align-items: center; text-align: left; font: inherit; color: inherit; cursor: pointer;
+  background: transparent; border: 1px solid transparent; border-radius: var(--r-md); padding: var(--sp-2) var(--sp-3); min-height: var(--hit); }
+.ng-zone:hover { background: var(--hover); }
+.ng-zone.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.ng-zone:focus-visible { outline: 3px solid var(--accent-ring); outline-offset: 2px; }
+.ng-zone-label { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.ng-zone-read { grid-column: 2; color: var(--n-600); font-variant-numeric: tabular-nums; white-space: pre-wrap; }
+.ng-track { position: relative; height: 18px; border-radius: var(--r-sm); background: var(--n-100); overflow: hidden; }
+.ng-band { position: absolute; top: 0; bottom: 0; border-radius: var(--r-sm); }
+.ng-band.wide { background: var(--accent-ring); }
+.ng-band.sure { background: var(--accent); }
+.ng-target { position: absolute; top: 6px; height: 6px; background: var(--n-900); border-radius: var(--r-pill); min-width: 4px; }
+.ng-target.is-range { top: 8px; height: 2px; opacity: .55; }
+.ng-ceiling { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -2px; background: var(--bad); }
+.ng-axis { display: flex; justify-content: space-between; margin: var(--sp-1) var(--sp-3) 0 calc(260px + var(--sp-4) + var(--sp-3)); }
+
+.ng-moves, .ng-plan { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--sp-3); }
+.ng-move { border-top: 1px solid var(--line-soft); padding-top: var(--sp-3); }
+.ng-move:first-child, .ng-plan li:first-child { border-top: 0; padding-top: 0; }
+.ng-move-h { display: flex; align-items: baseline; gap: var(--sp-3); }
+.ng-move-h strong { flex: 1; }
+.ng-rank { color: var(--muted); font-variant-numeric: tabular-nums; }
+.ng-swing { font-size: var(--fs-lg); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ng .ng-move p, .ng .ng-plan p { margin: var(--sp-1) 0; }
+.ng-move-src { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin-top: var(--sp-2); }
+.ng-side { margin: var(--sp-2) 0; padding-left: var(--sp-3); border-left: 3px solid var(--line); }
+.ng-plan { counter-reset: step; }
+.ng-plan li { counter-increment: step; position: relative; padding: var(--sp-3) 0 0 var(--sp-8); border-top: 1px solid var(--line-soft); }
+.ng-plan li::before { content: counter(step); position: absolute; left: 0; top: var(--sp-3); width: 24px; height: 24px; border-radius: var(--r-pill); display: grid; place-items: center;
+  background: var(--accent-soft); color: var(--accent); font-size: var(--fs-sm); font-weight: 650; }
+.ng-plan li:first-child::before { top: 0; }
+
+.ng-assume summary { cursor: pointer; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-3); min-height: var(--hit); }
+.ng .ng-assume summary h2 { margin: 0; }
+.ng-ins { display: grid; gap: var(--sp-2); margin-top: var(--sp-3); }
+.ng-in { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(140px, 1fr) 96px 110px auto; gap: var(--sp-3); align-items: center; padding: var(--sp-2) 0; border-top: 1px solid var(--line-soft); }
+.ng-in-label { display: grid; gap: 2px; }
+.ng-in-read { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+.ng-in-range { width: 100%; accent-color: var(--accent); }
+.ng-in-range.is-unset { opacity: .45; }
+.ng-in-num { height: var(--ctl-h); border: 1px solid var(--line); border-radius: var(--r-md); padding: 0 var(--sp-2); font: inherit; width: 100%; background: var(--surface); color: var(--ink); }
+.ng-notes { margin: var(--sp-3) 0 0; padding-left: var(--sp-4); }
+
+@media (max-width: 760px) {
+  .ng-figs { grid-template-columns: 1fr; }
+  .ng-zone { grid-template-columns: 1fr; }
+  .ng-zone-read { grid-column: 1; }
+  .ng-axis { margin-left: var(--sp-3); }
+  .ng-in { grid-template-columns: 1fr 1fr; }
+  .ng-trace-list li { grid-template-columns: 1fr auto; }
+}
+
+.ng-evidence { margin-top: var(--sp-2); }
+.ng-evidence > summary { cursor: pointer; color: var(--accent); min-height: var(--ctl-h-sm); display: inline-flex; align-items: center; }
+
+/* Claim and source: the shared .cs-* markup; these rules only place it inside this tab. */
+.ng-fig-src { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin-top: var(--sp-2); min-height: var(--ctl-h-sm); }
+.ng-zone-src { margin: 0 var(--sp-3) var(--sp-2) calc(260px + var(--sp-4) + var(--sp-3)); }
+.ng .cs-sources, .ng .cs-sources .chips { display: inline-flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+@media (max-width: 760px) { .ng-zone-src { margin-left: var(--sp-3); } }

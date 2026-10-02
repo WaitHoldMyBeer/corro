@@ -1,0 +1,5288 @@
+{
+  "$defs": {
+    "Agenda": {
+      "additionalProperties": false,
+      "properties": {
+        "as_of": {
+          "title": "As Of",
+          "type": "string"
+        },
+        "coming": {
+          "items": {
+            "$ref": "#/$defs/AgendaItem"
+          },
+          "title": "Coming",
+          "type": "array"
+        },
+        "done": {
+          "items": {
+            "$ref": "#/$defs/AgendaItem"
+          },
+          "title": "Done",
+          "type": "array"
+        },
+        "overdue": {
+          "items": {
+            "$ref": "#/$defs/AgendaItem"
+          },
+          "title": "Overdue",
+          "type": "array"
+        },
+        "waiting": {
+          "items": {
+            "$ref": "#/$defs/AgendaItem"
+          },
+          "title": "Waiting",
+          "type": "array"
+        }
+      },
+      "required": [
+        "as_of"
+      ],
+      "title": "Agenda",
+      "type": "object"
+    },
+    "AgendaBucket": {
+      "enum": [
+        "overdue",
+        "coming",
+        "waiting",
+        "done"
+      ],
+      "title": "AgendaBucket",
+      "type": "string"
+    },
+    "AgendaItem": {
+      "additionalProperties": false,
+      "properties": {
+        "assignee": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Assignee"
+        },
+        "bucket": {
+          "$ref": "#/$defs/AgendaBucket"
+        },
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "days_from_today": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Negative when past. Computed in code.",
+          "title": "Days From Today"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Detail"
+        },
+        "due": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Task due date, or calendar start.",
+          "title": "Due"
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "End"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "is_limitations": {
+          "default": false,
+          "title": "Is Limitations",
+          "type": "boolean"
+        },
+        "kind": {
+          "$ref": "#/$defs/SourceKind",
+          "description": "task or calendar_entry"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "waiting_on_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Waiting On Contact Id"
+        },
+        "waiting_on_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Waiting On Name"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "title",
+        "bucket",
+        "source"
+      ],
+      "title": "AgendaItem",
+      "type": "object"
+    },
+    "Ask": {
+      "additionalProperties": false,
+      "description": "Something the firm needs from a party outside it.",
+      "properties": {
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "due": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Due"
+        },
+        "first_asked": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Asked"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "last_asked": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Asked"
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Id"
+        },
+        "overdue": {
+          "default": false,
+          "title": "Overdue",
+          "type": "boolean"
+        },
+        "replied_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replied At"
+        },
+        "reply": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Provider's answer, stored in our database, never written to Clio.",
+          "title": "Reply"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "times_asked": {
+          "default": 1,
+          "title": "Times Asked",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "contact_id",
+        "text"
+      ],
+      "title": "Ask",
+      "type": "object"
+    },
+    "Attendance": {
+      "additionalProperties": false,
+      "description": "Appointments with this provider as recorded by the firm. States what is on\nfile; never infers a missed visit, a reason or compliance from an absence.",
+      "properties": {
+        "basis": {
+          "default": "as recorded by the firm",
+          "title": "Basis",
+          "type": "string"
+        },
+        "days_since_last_visit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Days Since Last Visit"
+        },
+        "last_visit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Visit"
+        },
+        "next_visit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Next Visit"
+        },
+        "signal": {
+          "default": "unknown",
+          "description": "unknown | recorded (past visits on file) | scheduled (a future one)",
+          "title": "Signal",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "visits": {
+          "default": 0,
+          "title": "Visits",
+          "type": "integer"
+        }
+      },
+      "title": "Attendance",
+      "type": "object"
+    },
+    "AudienceKind": {
+      "enum": [
+        "internal",
+        "provider",
+        "defence",
+        "client"
+      ],
+      "title": "AudienceKind",
+      "type": "string"
+    },
+    "BillsStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "billed_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Sum of this provider's charges, added in code.",
+          "title": "Billed Total"
+        },
+        "last_service_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Service Date"
+        },
+        "line_count": {
+          "default": 0,
+          "title": "Line Count",
+          "type": "integer"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "default": "unknown",
+          "description": "unknown | requested | partial | received",
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "title": "BillsStatus",
+      "type": "object"
+    },
+    "Brief": {
+      "additionalProperties": false,
+      "description": "The 90-second header. Every member is a Fact with its source, or null\nwhen the matter does not hold it.",
+      "properties": {
+        "alive": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Is the case still open and moving, and the last movement."
+        },
+        "case_value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "client_photo": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Photo"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Firm-only figure; category valuation."
+        },
+        "coverage_signal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoverageSignal"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The band a provider may be shown."
+        },
+        "firm_spend": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "last_client_contact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "limitations": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "summary": {
+          "description": "AI two-minute read, one sourced sentence each.",
+          "items": {
+            "$ref": "#/$defs/Fact"
+          },
+          "title": "Summary",
+          "type": "array"
+        }
+      },
+      "title": "Brief",
+      "type": "object"
+    },
+    "CardDesignRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "prompt": {
+          "description": "The card, described in the lawyer's words.",
+          "maxLength": 600,
+          "minLength": 3,
+          "title": "Prompt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "title": "CardDesignRequest",
+      "type": "object"
+    },
+    "CardDesignResult": {
+      "additionalProperties": false,
+      "description": "Either a card or `error`, a plain sentence for the dialog. A card comes as `template` (a\ngallery card with settings) when one fits the description, as `spec` (the generic card)\notherwise, and as both when the generic card can show the same thing: a client that does\nnot know templates uses `spec`.",
+      "properties": {
+        "cost_usd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Usd"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "latency_ms": {
+          "default": 0,
+          "title": "Latency Ms",
+          "type": "integer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "spec": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CardSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "template": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CardTemplate"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "CardDesignResult",
+      "type": "object"
+    },
+    "CardFilter": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "op": {
+          "enum": [
+            "eq",
+            "contains",
+            "gt",
+            "lt"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "value": {
+          "description": "Compared as text, or as a number or date for gt and lt.",
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "op",
+        "value"
+      ],
+      "title": "CardFilter",
+      "type": "object"
+    },
+    "CardSort": {
+      "additionalProperties": false,
+      "properties": {
+        "dir": {
+          "default": "asc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "title": "Dir",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "title": "CardSort",
+      "type": "object"
+    },
+    "CardSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Up to five field names of the source's items; the first is the headline.",
+          "title": "Fields"
+        },
+        "filter": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CardFilter"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kind": {
+          "enum": [
+            "stat",
+            "list",
+            "table",
+            "timeline",
+            "text"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "maximum": 25,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit"
+        },
+        "sort": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CardSort"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "One allowed path into the case model. Absent for a text card.",
+          "title": "Source"
+        },
+        "stat": {
+          "anyOf": [
+            {
+              "enum": [
+                "count",
+                "value"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Stat cards: count the items, or show the single value.",
+          "title": "Stat"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "maxLength": 280,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Text cards: the note itself, as the lawyer worded it.",
+          "title": "Text"
+        },
+        "title": {
+          "maxLength": 80,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "title"
+      ],
+      "title": "CardSpec",
+      "type": "object"
+    },
+    "CardTemplate": {
+      "additionalProperties": false,
+      "description": "A ready-made gallery card with its settings chosen: the same shape the dashboard\nlayout stores for a template instance (`base` is the gallery card's id).",
+      "properties": {
+        "base": {
+          "title": "Base",
+          "type": "string"
+        },
+        "settings": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Settings",
+          "type": "object"
+        }
+      },
+      "required": [
+        "base"
+      ],
+      "title": "CardTemplate",
+      "type": "object"
+    },
+    "CaseModel": {
+      "additionalProperties": false,
+      "description": "Response of GET /api/matters/{matter_id}/case.",
+      "properties": {
+        "agenda": {
+          "$ref": "#/$defs/Agenda"
+        },
+        "brief": {
+          "$ref": "#/$defs/Brief"
+        },
+        "changes": {
+          "$ref": "#/$defs/Changes"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "conflicts": {
+          "items": {
+            "$ref": "#/$defs/Conflict"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        },
+        "contacts": {
+          "items": {
+            "$ref": "#/$defs/Contact"
+          },
+          "title": "Contacts",
+          "type": "array"
+        },
+        "custom_fields": {
+          "description": "Every Clio custom field value on the matter.",
+          "items": {
+            "$ref": "#/$defs/Fact"
+          },
+          "title": "Custom Fields",
+          "type": "array"
+        },
+        "documents": {
+          "items": {
+            "$ref": "#/$defs/DocumentInfo"
+          },
+          "title": "Documents",
+          "type": "array"
+        },
+        "incoming": {
+          "description": "Communications from outside the firm, checked against the file. Newest first; those with a contradicted or out-of-date sentence carry it in `counts`.",
+          "items": {
+            "$ref": "#/$defs/IncomingCheck"
+          },
+          "title": "Incoming",
+          "type": "array"
+        },
+        "key_facts": {
+          "description": "The few entries that matter, ranked.",
+          "items": {
+            "$ref": "#/$defs/Fact"
+          },
+          "title": "Key Facts",
+          "type": "array"
+        },
+        "matter": {
+          "$ref": "#/$defs/Matter"
+        },
+        "meta": {
+          "$ref": "#/$defs/Meta"
+        },
+        "moves": {
+          "description": "Ranked; show the first three.",
+          "items": {
+            "$ref": "#/$defs/Move"
+          },
+          "title": "Moves",
+          "type": "array"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/ValueNode"
+          },
+          "title": "Nodes",
+          "type": "array"
+        },
+        "providers": {
+          "items": {
+            "$ref": "#/$defs/ProviderPanel"
+          },
+          "title": "Providers",
+          "type": "array"
+        },
+        "river": {
+          "$ref": "#/$defs/River"
+        },
+        "spend": {
+          "$ref": "#/$defs/Spend"
+        },
+        "timeline": {
+          "items": {
+            "$ref": "#/$defs/TimelineEvent"
+          },
+          "title": "Timeline",
+          "type": "array"
+        }
+      },
+      "required": [
+        "meta",
+        "matter",
+        "agenda"
+      ],
+      "title": "CaseModel",
+      "type": "object"
+    },
+    "CaseOverview": {
+      "additionalProperties": false,
+      "description": "One case on the lawyer-level overview. Built from stored data only. A value the\ncase does not hold is null, never zero; the counts are real counts.",
+      "properties": {
+        "agenda": {
+          "description": "This case's dated open items.",
+          "items": {
+            "$ref": "#/$defs/OverviewAgendaItem"
+          },
+          "title": "Agenda",
+          "type": "array"
+        },
+        "archived": {
+          "default": false,
+          "title": "Archived",
+          "type": "boolean"
+        },
+        "client_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Client Name"
+        },
+        "coming": {
+          "default": 0,
+          "title": "Coming",
+          "type": "integer"
+        },
+        "coverage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "display_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Number"
+        },
+        "documents": {
+          "default": 0,
+          "title": "Documents",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "imported_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Last import from the source system; null for a case created here.",
+          "title": "Imported At"
+        },
+        "last_activity": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Activity"
+        },
+        "limitations": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "next_deadline": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OverviewAgendaItem"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The nearest dated task or calendar entry not yet past."
+        },
+        "overdue": {
+          "default": 0,
+          "title": "Overdue",
+          "type": "integer"
+        },
+        "pages": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Null when the case has no documents.",
+          "title": "Pages"
+        },
+        "pages_read": {
+          "default": 0,
+          "title": "Pages Read",
+          "type": "integer"
+        },
+        "reading": {
+          "description": "'12 of 40 pages read', 'not read yet' or 'no documents yet': print as given.",
+          "title": "Reading",
+          "type": "string"
+        },
+        "source": {
+          "description": "clio | upload",
+          "title": "Source",
+          "type": "string"
+        },
+        "source_label": {
+          "description": "Imported | Uploaded: the word to print.",
+          "title": "Source Label",
+          "type": "string"
+        },
+        "spend": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Stage"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "to_review": {
+          "default": 0,
+          "description": "Differences between the firm's entries and its documents not yet reviewed.",
+          "title": "To Review",
+          "type": "integer"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "waiting": {
+          "default": 0,
+          "title": "Waiting",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "source",
+        "source_label",
+        "reading"
+      ],
+      "title": "CaseOverview",
+      "type": "object"
+    },
+    "ChangeItem": {
+      "additionalProperties": false,
+      "properties": {
+        "at": {
+          "description": "When it changed in Clio (created_at / updated_at), or when our sync saw it go.",
+          "title": "At",
+          "type": "string"
+        },
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "change": {
+          "$ref": "#/$defs/ChangeKind"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "summary": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Summary"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "change",
+        "at",
+        "title",
+        "source"
+      ],
+      "title": "ChangeItem",
+      "type": "object"
+    },
+    "ChangeKind": {
+      "enum": [
+        "new",
+        "updated",
+        "removed"
+      ],
+      "title": "ChangeKind",
+      "type": "string"
+    },
+    "Changes": {
+      "additionalProperties": false,
+      "properties": {
+        "counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Changed items per SourceKind.",
+          "title": "Counts",
+          "type": "object"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/ChangeItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "since": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cut-off used: the viewer's last open, or the ?since= override.",
+          "title": "Since"
+        }
+      },
+      "title": "Changes",
+      "type": "object"
+    },
+    "CheckEvidence": {
+      "additionalProperties": false,
+      "description": "One ledger claim a verdict rests on, copied from the ledger by id.",
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "origin": {
+          "description": "field | notes | correspondence | document",
+          "title": "Origin",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/EvidenceRole"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef",
+          "description": "Open `source.href` for the note, email or page; carries quote and page."
+        },
+        "text": {
+          "description": "The claim as the ledger states it.",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "claim_id",
+        "role",
+        "text",
+        "origin",
+        "source"
+      ],
+      "title": "CheckEvidence",
+      "type": "object"
+    },
+    "CheckMode": {
+      "enum": [
+        "draft",
+        "call",
+        "incoming"
+      ],
+      "title": "CheckMode",
+      "type": "string"
+    },
+    "CheckReplacement": {
+      "additionalProperties": false,
+      "description": "One-click fix for a contradicted or stale value: replace text[start:end] with `text`.",
+      "properties": {
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "end": {
+          "title": "End",
+          "type": "integer"
+        },
+        "start": {
+          "title": "Start",
+          "type": "integer"
+        },
+        "text": {
+          "description": "The file's value, formatted in code from the ledger. Never model output.",
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end",
+        "text",
+        "claim_id"
+      ],
+      "title": "CheckReplacement",
+      "type": "object"
+    },
+    "CheckRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "audience": {
+          "$ref": "#/$defs/AudienceKind",
+          "default": "internal"
+        },
+        "audience_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The provider being written to, when audience is provider.",
+          "title": "Audience Contact Id"
+        },
+        "author_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Who wrote `text`, when mode is incoming.",
+          "title": "Author Contact Id"
+        },
+        "complete": {
+          "default": false,
+          "description": "Draft mode only: treat trailing text without end punctuation as a finished sentence. False leaves it to tier 1 until the sentence is ended. Call and incoming text is always complete.",
+          "title": "Complete",
+          "type": "boolean"
+        },
+        "max_tier": {
+          "default": 2,
+          "description": "1 = code only, returns in milliseconds; sentences that need the model come back `pending`. 2 = also resolve pending sentences with the model. Send 1 then 2 for an instant first paint.",
+          "maximum": 2,
+          "minimum": 1,
+          "title": "Max Tier",
+          "type": "integer"
+        },
+        "mode": {
+          "$ref": "#/$defs/CheckMode",
+          "default": "draft"
+        },
+        "source_clio_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "...and id. Its own claims are then not used as evidence for it.",
+          "title": "Source Clio Id"
+        },
+        "source_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "When the text is itself a record in the matter: its Clio type...",
+          "title": "Source Kind"
+        },
+        "text": {
+          "description": "The whole editor content, one utterance, or the incoming message body.",
+          "title": "Text",
+          "type": "string"
+        },
+        "written_on": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "YYYY-MM-DD the text was written, when it is not today (an email already in Clio). A source recorded after that date cannot contradict it.",
+          "title": "Written On"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "CheckRequest",
+      "type": "object"
+    },
+    "CheckResult": {
+      "additionalProperties": false,
+      "description": "Response of POST /api/matters/{matter_id}/check.",
+      "properties": {
+        "audience": {
+          "$ref": "#/$defs/AudienceKind"
+        },
+        "audience_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Audience Contact Id"
+        },
+        "author_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Author Contact Id"
+        },
+        "blocked": {
+          "default": false,
+          "description": "True when any span is dont_send for this audience.",
+          "title": "Blocked",
+          "type": "boolean"
+        },
+        "latency_ms": {
+          "default": 0,
+          "title": "Latency Ms",
+          "type": "integer"
+        },
+        "ledger_claims": {
+          "default": 0,
+          "description": "Claims in the ledger. 0 = the digest has not produced any yet.",
+          "title": "Ledger Claims",
+          "type": "integer"
+        },
+        "ledger_version": {
+          "description": "Changes whenever the claims ledger does; cached verdicts are keyed on it.",
+          "title": "Ledger Version",
+          "type": "string"
+        },
+        "matter_id": {
+          "title": "Matter Id",
+          "type": "integer"
+        },
+        "mode": {
+          "$ref": "#/$defs/CheckMode"
+        },
+        "pending": {
+          "default": 0,
+          "description": "Spans still waiting for tier 2. Re-post with max_tier 2 to resolve them.",
+          "title": "Pending",
+          "type": "integer"
+        },
+        "spans": {
+          "items": {
+            "$ref": "#/$defs/CheckSpan"
+          },
+          "title": "Spans",
+          "type": "array"
+        },
+        "stats": {
+          "$ref": "#/$defs/CheckStats"
+        },
+        "tier2_available": {
+          "default": false,
+          "description": "False when no model is configured or it is failing: verdicts are tier 1 only.",
+          "title": "Tier2 Available",
+          "type": "boolean"
+        },
+        "tier2_error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Why tier 2 is off when a model is configured (error type only); retried after a minute.",
+          "title": "Tier2 Error"
+        }
+      },
+      "required": [
+        "matter_id",
+        "mode",
+        "audience",
+        "ledger_version"
+      ],
+      "title": "CheckResult",
+      "type": "object"
+    },
+    "CheckSpan": {
+      "additionalProperties": false,
+      "properties": {
+        "cached": {
+          "default": false,
+          "title": "Cached",
+          "type": "boolean"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DisclosureCategory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What the sentence discloses. Null when undetermined."
+        },
+        "checked": {
+          "default": false,
+          "description": "True only when the model tier read this sentence (now, or earlier and cached). False while pending, when the tier is off or failed for this sentence, and for verdicts code reached alone. A send guard clears a sentence on this flag, never on the absence of a verdict.",
+          "title": "Checked",
+          "type": "boolean"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "end": {
+          "title": "End",
+          "type": "integer"
+        },
+        "evidence": {
+          "description": "Same claims as claim_ids, resolved.",
+          "items": {
+            "$ref": "#/$defs/CheckEvidence"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "fact_verdict": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Verdict"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For dont_send: what the file says about the sentence itself (it may be true and still unsendable)."
+        },
+        "id": {
+          "description": "Stable for the same sentence, audience and ledger version; use as a render key.",
+          "title": "Id",
+          "type": "string"
+        },
+        "latency_ms": {
+          "default": 0,
+          "description": "Time this sentence took when it was first checked.",
+          "title": "Latency Ms",
+          "type": "integer"
+        },
+        "message": {
+          "default": "",
+          "description": "One line for the hover card, built in code from the ledger.",
+          "title": "Message",
+          "type": "string"
+        },
+        "partial": {
+          "default": false,
+          "description": "Trailing text of a draft with no end punctuation; tier 1 only.",
+          "title": "Partial",
+          "type": "boolean"
+        },
+        "pending": {
+          "default": false,
+          "description": "True when tier 2 has not run yet for this sentence; show 'checking'.",
+          "title": "Pending",
+          "type": "boolean"
+        },
+        "replacement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CheckReplacement"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start": {
+          "title": "Start",
+          "type": "integer"
+        },
+        "text": {
+          "description": "The sentence as submitted: request.text.slice(start, end).",
+          "title": "Text",
+          "type": "string"
+        },
+        "tier": {
+          "default": 1,
+          "description": "Which tier produced the verdict: 1 code, 2 model.",
+          "title": "Tier",
+          "type": "integer"
+        },
+        "verdict": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Verdict"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Null only while `pending`."
+        }
+      },
+      "required": [
+        "id",
+        "start",
+        "end",
+        "text"
+      ],
+      "title": "CheckSpan",
+      "type": "object"
+    },
+    "CheckStats": {
+      "additionalProperties": false,
+      "description": "Running totals for the Write footer, per matter, since the server started\n(cost is the stored total for the matter, so it survives a restart).",
+      "properties": {
+        "cache_hits": {
+          "default": 0,
+          "title": "Cache Hits",
+          "type": "integer"
+        },
+        "cost_usd": {
+          "default": 0.0,
+          "description": "Sum of checker model calls for this matter, from API usage.",
+          "title": "Cost Usd",
+          "type": "number"
+        },
+        "cost_usd_per_check": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "cost_usd / tier2_calls recorded for the matter.",
+          "title": "Cost Usd Per Check"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Model id tier 2 uses; null when none is configured (tier 1 only).",
+          "title": "Model"
+        },
+        "sentences_checked": {
+          "default": 0,
+          "title": "Sentences Checked",
+          "type": "integer"
+        },
+        "tier1_p50_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tier1 P50 Ms"
+        },
+        "tier1_p95_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tier1 P95 Ms"
+        },
+        "tier1_resolved": {
+          "default": 0,
+          "title": "Tier1 Resolved",
+          "type": "integer"
+        },
+        "tier2_calls": {
+          "default": 0,
+          "title": "Tier2 Calls",
+          "type": "integer"
+        },
+        "tier2_p50_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Measured wall time of model calls; null until one has run.",
+          "title": "Tier2 P50 Ms"
+        },
+        "tier2_p95_ms": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tier2 P95 Ms"
+        }
+      },
+      "title": "CheckStats",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "description": "One statement the matter makes, with exactly one source.",
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "date_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "'clio' when the date is the Clio record's, 'document' when printed on the page.",
+          "title": "Date Source"
+        },
+        "derivation": {
+          "$ref": "#/$defs/Derivation"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "issuer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "For a document claim: whose page it is, as printed on the page.",
+          "title": "Issuer"
+        },
+        "origin": {
+          "$ref": "#/$defs/ClaimOrigin"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "topic": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Normalised subject used to line claims up against each other.",
+          "title": "Topic"
+        }
+      },
+      "required": [
+        "id",
+        "text",
+        "origin",
+        "derivation",
+        "source"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "ClaimOrigin": {
+      "enum": [
+        "field",
+        "notes",
+        "correspondence",
+        "document"
+      ],
+      "title": "ClaimOrigin",
+      "type": "string"
+    },
+    "Conflict": {
+      "additionalProperties": false,
+      "description": "The notes say one thing and a document in the file shows another.",
+      "properties": {
+        "amount_at_stake": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The amount behind the coverage gate when this subject bears on it. Computed in code.",
+          "title": "Amount At Stake"
+        },
+        "document_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Document Claim Ids",
+          "type": "array"
+        },
+        "document_quotes_verified": {
+          "default": 0,
+          "description": "Document-side claims whose quote code found in the page text.",
+          "title": "Document Quotes Verified",
+          "type": "integer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "default": "record",
+          "description": "answered_gap = the firm's entries call the thing unknown, missing or outstanding and a page in the file holds it; record = the entries say one thing and a record in the file says another; expert_opinion = the document side is in a Clio folder the firm keeps for expert material, so it is an opinion, not a record. The folder test is code; outstanding-versus-different is the model's reading of the entry side, validated against a two-value schema.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "kind_label": {
+          "default": "",
+          "description": "The kind in plain words, for the card.",
+          "title": "Kind Label",
+          "type": "string"
+        },
+        "merged_topics": {
+          "description": "Other topics folded into this card.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Merged Topics",
+          "type": "array"
+        },
+        "node_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Node Ids",
+          "type": "array"
+        },
+        "notes_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes Claim Ids",
+          "type": "array"
+        },
+        "notes_quotes_verified": {
+          "default": 0,
+          "description": "Entry-side claims whose quote code found in the Clio text.",
+          "title": "Notes Quotes Verified",
+          "type": "integer"
+        },
+        "rank": {
+          "default": 0,
+          "description": "1 = show first. Ordered in code: by kind (answered_gap, record, expert_opinion), then the amount behind the gate, severity, a verified document side, and the number of sources.",
+          "title": "Rank",
+          "type": "integer"
+        },
+        "review": {
+          "default": "unreviewed",
+          "description": "unreviewed | confirmed | dismissed, set by the attorney.",
+          "title": "Review",
+          "type": "string"
+        },
+        "review_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "PUT {\"review\": ...} here to record the attorney's call.",
+          "title": "Review Href"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "severity": {
+          "default": 1,
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Severity",
+          "type": "integer"
+        },
+        "source_count": {
+          "default": 0,
+          "description": "Distinct Clio records and document pages behind the two sides.",
+          "title": "Source Count",
+          "type": "integer"
+        },
+        "stale": {
+          "default": false,
+          "description": "A record this card rests on has changed in Clio since the card was built.",
+          "title": "Stale",
+          "type": "boolean"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "topic": {
+          "title": "Topic",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "topic",
+        "summary"
+      ],
+      "title": "Conflict",
+      "type": "object"
+    },
+    "Contact": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Email"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "phone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Phone"
+        },
+        "role": {
+          "$ref": "#/$defs/ContactRole",
+          "default": "other"
+        },
+        "role_derivation": {
+          "$ref": "#/$defs/Derivation",
+          "default": "computed"
+        },
+        "role_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Clio relationship description, verbatim.",
+          "title": "Role Text"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "type": {
+          "description": "Clio contact type: Person or Company.",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "type",
+        "source"
+      ],
+      "title": "Contact",
+      "type": "object"
+    },
+    "ContactRole": {
+      "enum": [
+        "client",
+        "provider",
+        "adverse",
+        "insurer",
+        "other"
+      ],
+      "title": "ContactRole",
+      "type": "string"
+    },
+    "CoverageBand": {
+      "description": "All a provider is ever told about coverage: one of three bands, no number.",
+      "enum": [
+        "confirmed",
+        "being_confirmed",
+        "not_established"
+      ],
+      "title": "CoverageBand",
+      "type": "string"
+    },
+    "CoverageSignal": {
+      "additionalProperties": false,
+      "properties": {
+        "band": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CoverageBand"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "display": {
+          "title": "Display",
+          "type": "string"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Fixed caveat to print under the band wherever a provider sees it.",
+          "title": "Note"
+        },
+        "shared": {
+          "default": true,
+          "description": "False renders as 'Not shared by the firm', so silence is not misread.",
+          "title": "Shared",
+          "type": "boolean"
+        },
+        "sources": {
+          "description": "Firm view only; empty in a ProviderView.",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "display"
+      ],
+      "title": "CoverageSignal",
+      "type": "object"
+    },
+    "DashboardDesignRequest": {
+      "additionalProperties": false,
+      "properties": {
+        "cards": {
+          "anyOf": [
+            {
+              "items": {
+                "$ref": "#/$defs/GalleryCard"
+              },
+              "maxItems": 80,
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The browser's card registry. When absent the server reads it from the card manifests.",
+          "title": "Cards"
+        },
+        "prompt": {
+          "description": "What the lawyer wants the dashboard for, in their words.",
+          "maxLength": 600,
+          "minLength": 3,
+          "title": "Prompt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "title": "DashboardDesignRequest",
+      "type": "object"
+    },
+    "DashboardDesignResult": {
+      "additionalProperties": false,
+      "description": "Either a layout of six to ten cards in display order, or `error`, a plain sentence.",
+      "properties": {
+        "cards": {
+          "items": {
+            "$ref": "#/$defs/DashboardEntry"
+          },
+          "title": "Cards",
+          "type": "array"
+        },
+        "cost_usd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cost Usd"
+        },
+        "error": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Error"
+        },
+        "latency_ms": {
+          "default": 0,
+          "title": "Latency Ms",
+          "type": "integer"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Model"
+        },
+        "skipped": {
+          "default": 0,
+          "description": "Entries the model proposed that were not in the catalogue and were left out.",
+          "title": "Skipped",
+          "type": "integer"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Title"
+        }
+      },
+      "title": "DashboardDesignResult",
+      "type": "object"
+    },
+    "DashboardEntry": {
+      "additionalProperties": false,
+      "description": "One card of a designed dashboard, in the shape PUT /api/matters/{id}/dashboard stores\n(`id`, optional `spec`), plus two lines for the preview.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "reason": {
+          "default": "",
+          "description": "One line: why this card is on this dashboard.",
+          "title": "Reason",
+          "type": "string"
+        },
+        "spec": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Absent for a registered card; {base, settings} for a template; a CardSpec for a described card.",
+          "title": "Spec"
+        },
+        "title": {
+          "default": "",
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "DashboardEntry",
+      "type": "object"
+    },
+    "Derivation": {
+      "enum": [
+        "clio",
+        "computed",
+        "ai"
+      ],
+      "title": "Derivation",
+      "type": "string"
+    },
+    "DigestStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "changed_since_reconcile": {
+          "default": 0,
+          "description": "Records and documents digested since the cards were built.",
+          "title": "Changed Since Reconcile",
+          "type": "integer"
+        },
+        "check_calls": {
+          "default": 0,
+          "description": "Model calls made by the live checker, reported separately.",
+          "title": "Check Calls",
+          "type": "integer"
+        },
+        "check_cost_usd": {
+          "default": 0.0,
+          "title": "Check Cost Usd",
+          "type": "number"
+        },
+        "check_cost_usd_avg": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Check Cost Usd Avg"
+        },
+        "cost_usd_last_run": {
+          "default": 0.0,
+          "description": "Cost of the most recent incremental run.",
+          "title": "Cost Usd Last Run",
+          "type": "number"
+        },
+        "cost_usd_total": {
+          "default": 0.0,
+          "description": "Cost per case: reading pages and records, and reconciliation. Excludes live checks.",
+          "title": "Cost Usd Total",
+          "type": "number"
+        },
+        "input_tokens_last_run": {
+          "default": 0,
+          "title": "Input Tokens Last Run",
+          "type": "integer"
+        },
+        "items_digested": {
+          "default": 0,
+          "title": "Items Digested",
+          "type": "integer"
+        },
+        "items_stale": {
+          "default": 0,
+          "description": "Items whose content hash changed since they were digested.",
+          "title": "Items Stale",
+          "type": "integer"
+        },
+        "items_total": {
+          "default": 0,
+          "title": "Items Total",
+          "type": "integer"
+        },
+        "last_run_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Run At"
+        },
+        "output_tokens_last_run": {
+          "default": 0,
+          "title": "Output Tokens Last Run",
+          "type": "integer"
+        },
+        "pages_digested": {
+          "default": 0,
+          "title": "Pages Digested",
+          "type": "integer"
+        },
+        "pages_total": {
+          "default": 0,
+          "title": "Pages Total",
+          "type": "integer"
+        },
+        "quotes_total": {
+          "default": 0,
+          "description": "AI-derived quotes produced.",
+          "title": "Quotes Total",
+          "type": "integer"
+        },
+        "quotes_uncheckable": {
+          "default": 0,
+          "description": "Quotes read from scanned pages with no text layer: code cannot check them; the UI shows the page.",
+          "title": "Quotes Uncheckable",
+          "type": "integer"
+        },
+        "quotes_verified": {
+          "default": 0,
+          "description": "Of those, how many code found verbatim in the source text.",
+          "title": "Quotes Verified",
+          "type": "integer"
+        },
+        "reconcile_estimate_seconds": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "How long the last reconciliation took.",
+          "title": "Reconcile Estimate Seconds"
+        },
+        "reconcile_estimate_usd": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "What the last reconciliation cost.",
+          "title": "Reconcile Estimate Usd"
+        },
+        "reconcile_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "POST to rebuild the cards from the current claims.",
+          "title": "Reconcile Href"
+        },
+        "reconcile_stale": {
+          "default": false,
+          "description": "True when records or pages have changed since the conflict cards were built. The cards, their order and their review states stay as they were until someone asks for a re-check.",
+          "title": "Reconcile Stale",
+          "type": "boolean"
+        },
+        "reconciled_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reconciled At"
+        },
+        "state": {
+          "default": "not_started",
+          "description": "not_started | running | partial | complete | failed",
+          "title": "State",
+          "type": "string"
+        },
+        "usage": {
+          "items": {
+            "$ref": "#/$defs/ModelUsage"
+          },
+          "title": "Usage",
+          "type": "array"
+        }
+      },
+      "title": "DigestStatus",
+      "type": "object"
+    },
+    "DisclosureCategory": {
+      "description": "Every shareable item has exactly one category. A provider's view is built\nfrom an allowlist of these; the last four can never be put on an allowlist.",
+      "enum": [
+        "status",
+        "bills",
+        "records",
+        "attendance",
+        "asks",
+        "coverage",
+        "valuation",
+        "strategy",
+        "other_party",
+        "internal"
+      ],
+      "title": "DisclosureCategory",
+      "type": "string"
+    },
+    "DocumentInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "file_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "File Href"
+        },
+        "folder": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Folder"
+        },
+        "has_text_layer": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Has Text Layer"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "page_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Count"
+        },
+        "pages_digested": {
+          "default": 0,
+          "title": "Pages Digested",
+          "type": "integer"
+        },
+        "received_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Received At"
+        },
+        "size_bytes": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Size Bytes"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "source"
+      ],
+      "title": "DocumentInfo",
+      "type": "object"
+    },
+    "EvidenceRole": {
+      "enum": [
+        "supports",
+        "contradicts",
+        "superseded",
+        "supersedes",
+        "discloses"
+      ],
+      "title": "EvidenceRole",
+      "type": "string"
+    },
+    "ExpenseLine": {
+      "additionalProperties": false,
+      "properties": {
+        "amount": {
+          "title": "Amount",
+          "type": "number"
+        },
+        "category_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category Name"
+        },
+        "clio_id": {
+          "title": "Clio Id",
+          "type": "integer"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        }
+      },
+      "required": [
+        "clio_id",
+        "amount",
+        "source"
+      ],
+      "title": "ExpenseLine",
+      "type": "object"
+    },
+    "Fact": {
+      "additionalProperties": false,
+      "description": "One sourced value. The header brief and key facts are all Facts.",
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USD, when the fact is money.",
+          "title": "Amount"
+        },
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "conflict_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conflict Ids",
+          "type": "array"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "When the fact is a date, or the date it was true as of.",
+          "title": "Date"
+        },
+        "derivation": {
+          "$ref": "#/$defs/Derivation"
+        },
+        "detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Longer text for the deep-dive view.",
+          "title": "Detail"
+        },
+        "display": {
+          "description": "Formatted value ready to render.",
+          "title": "Display",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/FactStatus",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "display",
+        "derivation"
+      ],
+      "title": "Fact",
+      "type": "object"
+    },
+    "FactStatus": {
+      "enum": [
+        "confirmed",
+        "assumed",
+        "contested",
+        "stale",
+        "unknown"
+      ],
+      "title": "FactStatus",
+      "type": "string"
+    },
+    "FirmOverview": {
+      "additionalProperties": false,
+      "description": "Response of GET /api/firm/overview.",
+      "properties": {
+        "agenda": {
+          "description": "The next dated items across all cases, soonest first.",
+          "items": {
+            "$ref": "#/$defs/OverviewAgendaItem"
+          },
+          "title": "Agenda",
+          "type": "array"
+        },
+        "cases": {
+          "items": {
+            "$ref": "#/$defs/CaseOverview"
+          },
+          "title": "Cases",
+          "type": "array"
+        },
+        "generated_at": {
+          "title": "Generated At",
+          "type": "string"
+        },
+        "totals": {
+          "$ref": "#/$defs/OverviewTotals"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "generated_at"
+      ],
+      "title": "FirmOverview",
+      "type": "object"
+    },
+    "GalleryCard": {
+      "additionalProperties": false,
+      "description": "One registered card of the gallery, as data: what a designed dashboard may place.",
+      "properties": {
+        "about": {
+          "default": "",
+          "maxLength": 200,
+          "title": "About",
+          "type": "string"
+        },
+        "group": {
+          "default": "",
+          "maxLength": 30,
+          "title": "Group",
+          "type": "string"
+        },
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9:_-]{0,59}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "template": {
+          "default": false,
+          "title": "Template",
+          "type": "boolean"
+        },
+        "title": {
+          "maxLength": 60,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title"
+      ],
+      "title": "GalleryCard",
+      "type": "object"
+    },
+    "IncomingCheck": {
+      "additionalProperties": false,
+      "description": "A communication already in Clio from someone outside the firm, checked sentence\nby sentence against the claims ledger: their statement versus your file. Firm side only.",
+      "properties": {
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "contact_name": {
+          "title": "Contact Name",
+          "type": "string"
+        },
+        "contact_role": {
+          "title": "Contact Role",
+          "type": "string"
+        },
+        "counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Sentences per verdict.",
+          "title": "Counts",
+          "type": "object"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "spans": {
+          "items": {
+            "$ref": "#/$defs/IncomingSpan"
+          },
+          "title": "Spans",
+          "type": "array"
+        },
+        "subject": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Subject"
+        }
+      },
+      "required": [
+        "id",
+        "contact_id",
+        "contact_name",
+        "contact_role",
+        "source"
+      ],
+      "title": "IncomingCheck",
+      "type": "object"
+    },
+    "IncomingSpan": {
+      "additionalProperties": false,
+      "description": "One sentence of something a party sent in, set against the file by the checker.",
+      "properties": {
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "message": {
+          "default": "",
+          "description": "One line built in code from the ledger: what the file says.",
+          "title": "Message",
+          "type": "string"
+        },
+        "sources": {
+          "description": "The file's side: open to see the note or page.",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "verdict": {
+          "description": "supported | contradicted | out_of_date | not_in_file",
+          "title": "Verdict",
+          "type": "string"
+        }
+      },
+      "required": [
+        "text",
+        "verdict"
+      ],
+      "title": "IncomingSpan",
+      "type": "object"
+    },
+    "Matter": {
+      "additionalProperties": false,
+      "properties": {
+        "client": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Contact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "display_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "open_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Open Date"
+        },
+        "practice_area": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Practice Area"
+        },
+        "responsible_attorney": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Responsible Attorney"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        }
+      },
+      "required": [
+        "id",
+        "source"
+      ],
+      "title": "Matter",
+      "type": "object"
+    },
+    "MatterList": {
+      "additionalProperties": false,
+      "description": "Response of GET /api/matters.",
+      "properties": {
+        "connect_href": {
+          "default": "/oauth/start",
+          "title": "Connect Href",
+          "type": "string"
+        },
+        "connected": {
+          "description": "False when Clio is not connected; open `connect_href` to connect.",
+          "title": "Connected",
+          "type": "boolean"
+        },
+        "items": {
+          "items": {
+            "$ref": "#/$defs/MatterListItem"
+          },
+          "title": "Items",
+          "type": "array"
+        },
+        "live": {
+          "default": false,
+          "description": "True when the list was just read from Clio, false when from our cache.",
+          "title": "Live",
+          "type": "boolean"
+        },
+        "selected_matter_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Selected Matter Id"
+        }
+      },
+      "required": [
+        "connected"
+      ],
+      "title": "MatterList",
+      "type": "object"
+    },
+    "MatterListItem": {
+      "additionalProperties": false,
+      "description": "One row of GET /api/matters, read from Clio.",
+      "properties": {
+        "archived": {
+          "default": false,
+          "description": "Hidden by the firm in our store; nothing is sent to the source system.",
+          "title": "Archived",
+          "type": "boolean"
+        },
+        "client_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Client Name"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "display_number": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Display Number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "source": {
+          "default": "clio",
+          "description": "clio = read from the source system; upload = created here and filled by upload.",
+          "title": "Source",
+          "type": "string"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "synced_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Synced At"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "MatterListItem",
+      "type": "object"
+    },
+    "Message": {
+      "additionalProperties": false,
+      "description": "One message in the thread between the firm and a provider, stored in our database.",
+      "properties": {
+        "at": {
+          "title": "At",
+          "type": "string"
+        },
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "direction": {
+          "description": "from_provider | from_firm",
+          "title": "Direction",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "request_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Request Id"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "contact_id",
+        "direction",
+        "text",
+        "at"
+      ],
+      "title": "Message",
+      "type": "object"
+    },
+    "Meta": {
+      "additionalProperties": false,
+      "properties": {
+        "clio_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Objects held per type.",
+          "title": "Clio Counts",
+          "type": "object"
+        },
+        "contract_version": {
+          "default": "0.12.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "digest": {
+          "$ref": "#/$defs/DigestStatus"
+        },
+        "generated_at": {
+          "title": "Generated At",
+          "type": "string"
+        },
+        "matter_id": {
+          "title": "Matter Id",
+          "type": "integer"
+        },
+        "synced_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Last successful read from Clio.",
+          "title": "Synced At"
+        }
+      },
+      "required": [
+        "matter_id",
+        "generated_at"
+      ],
+      "title": "Meta",
+      "type": "object"
+    },
+    "ModelUsage": {
+      "additionalProperties": false,
+      "properties": {
+        "cache_creation_input_tokens": {
+          "default": 0,
+          "title": "Cache Creation Input Tokens",
+          "type": "integer"
+        },
+        "cache_read_input_tokens": {
+          "default": 0,
+          "title": "Cache Read Input Tokens",
+          "type": "integer"
+        },
+        "cost_usd": {
+          "default": 0.0,
+          "title": "Cost Usd",
+          "type": "number"
+        },
+        "input_tokens": {
+          "default": 0,
+          "title": "Input Tokens",
+          "type": "integer"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "output_tokens": {
+          "default": 0,
+          "title": "Output Tokens",
+          "type": "integer"
+        },
+        "requests": {
+          "default": 0,
+          "title": "Requests",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "model"
+      ],
+      "title": "ModelUsage",
+      "type": "object"
+    },
+    "Move": {
+      "additionalProperties": false,
+      "description": "One of the things to do now. Chosen and ranked in code: a hard deadline within\n14 days first, then the amount it touches, then how long it has waited.",
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USD the move touches; null when none is known.",
+          "title": "Amount"
+        },
+        "audience_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Recipient of `draft_text`, when it is a message.",
+          "title": "Audience Contact Id"
+        },
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "draft_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "A message for the 'draft' action, from a template in code.",
+          "title": "Draft Text"
+        },
+        "due": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Due"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "description": "deadline | ask | conflict | node | task",
+          "title": "Kind",
+          "type": "string"
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Id"
+        },
+        "owed_by": {
+          "description": "Who has the next step: 'firm' or the name of a contact.",
+          "title": "Owed By",
+          "type": "string"
+        },
+        "owed_by_role": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "firm | client | provider | adverse | insurer | other",
+          "title": "Owed By Role"
+        },
+        "rank": {
+          "title": "Rank",
+          "type": "integer"
+        },
+        "reason": {
+          "description": "One line saying why it is on the list, built in code.",
+          "title": "Reason",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "times_asked": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Messages the firm has logged to them since they last replied.",
+          "title": "Times Asked"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "waiting_days": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Waiting Days"
+        }
+      },
+      "required": [
+        "id",
+        "rank",
+        "kind",
+        "title",
+        "reason",
+        "owed_by",
+        "source"
+      ],
+      "title": "Move",
+      "type": "object"
+    },
+    "NewCase": {
+      "additionalProperties": false,
+      "description": "Body of POST /api/matters: create an empty case in our own store.",
+      "properties": {
+        "client_name": {
+          "anyOf": [
+            {
+              "maxLength": 200,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Client Name"
+        },
+        "name": {
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "number": {
+          "anyOf": [
+            {
+              "maxLength": 80,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Number"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "NewCase",
+      "type": "object"
+    },
+    "NodeKind": {
+      "enum": [
+        "value",
+        "economic",
+        "coverage",
+        "gate",
+        "lien",
+        "cost",
+        "fee",
+        "net"
+      ],
+      "title": "NodeKind",
+      "type": "string"
+    },
+    "OverviewAgendaItem": {
+      "additionalProperties": false,
+      "properties": {
+        "bucket": {
+          "description": "overdue | waiting | coming",
+          "title": "Bucket",
+          "type": "string"
+        },
+        "case_id": {
+          "title": "Case Id",
+          "type": "integer"
+        },
+        "case_name": {
+          "title": "Case Name",
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "days_from_today": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Days From Today"
+        },
+        "kind": {
+          "description": "task or calendar_entry",
+          "title": "Kind",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "case_id",
+        "case_name",
+        "title",
+        "kind",
+        "bucket"
+      ],
+      "title": "OverviewAgendaItem",
+      "type": "object"
+    },
+    "OverviewTotals": {
+      "additionalProperties": false,
+      "description": "Added up in code across the cases that are not archived. A money total is null when no case holds that figure.",
+      "properties": {
+        "archived": {
+          "default": 0,
+          "title": "Archived",
+          "type": "integer"
+        },
+        "cases": {
+          "default": 0,
+          "title": "Cases",
+          "type": "integer"
+        },
+        "coming": {
+          "default": 0,
+          "title": "Coming",
+          "type": "integer"
+        },
+        "coverage_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Coverage Total"
+        },
+        "due_14_days": {
+          "default": 0,
+          "title": "Due 14 Days",
+          "type": "integer"
+        },
+        "open_cases": {
+          "default": 0,
+          "title": "Open Cases",
+          "type": "integer"
+        },
+        "overdue": {
+          "default": 0,
+          "title": "Overdue",
+          "type": "integer"
+        },
+        "spend_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Spend Total"
+        },
+        "to_review": {
+          "default": 0,
+          "title": "To Review",
+          "type": "integer"
+        },
+        "value_total": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value Total"
+        },
+        "waiting": {
+          "default": 0,
+          "title": "Waiting",
+          "type": "integer"
+        }
+      },
+      "title": "OverviewTotals",
+      "type": "object"
+    },
+    "Photo": {
+      "additionalProperties": false,
+      "properties": {
+        "document_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The matter document the photo was found in.",
+          "title": "Document Id"
+        },
+        "image_href": {
+          "description": "PNG served from our document cache.",
+          "title": "Image Href",
+          "type": "string"
+        },
+        "page": {
+          "default": 1,
+          "title": "Page",
+          "type": "integer"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        }
+      },
+      "required": [
+        "image_href",
+        "source"
+      ],
+      "title": "Photo",
+      "type": "object"
+    },
+    "ProviderPanel": {
+      "additionalProperties": false,
+      "description": "The firm's view of one treating provider.",
+      "properties": {
+        "asks": {
+          "items": {
+            "$ref": "#/$defs/Ask"
+          },
+          "title": "Asks",
+          "type": "array"
+        },
+        "attendance": {
+          "$ref": "#/$defs/Attendance"
+        },
+        "bills": {
+          "$ref": "#/$defs/BillsStatus"
+        },
+        "contact": {
+          "$ref": "#/$defs/Contact"
+        },
+        "last_contact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "policy": {
+          "$ref": "#/$defs/SharePolicy"
+        },
+        "preview_href": {
+          "description": "GET returns the ProviderView this policy would produce.",
+          "title": "Preview Href",
+          "type": "string"
+        },
+        "records": {
+          "$ref": "#/$defs/RecordsStatus"
+        },
+        "requests": {
+          "description": "The inbox: newest first, each with a suggested action.",
+          "items": {
+            "$ref": "#/$defs/ProviderRequest"
+          },
+          "title": "Requests",
+          "type": "array"
+        },
+        "shares": {
+          "items": {
+            "$ref": "#/$defs/ShareLogEntry"
+          },
+          "title": "Shares",
+          "type": "array"
+        },
+        "thread": {
+          "items": {
+            "$ref": "#/$defs/Message"
+          },
+          "title": "Thread",
+          "type": "array"
+        }
+      },
+      "required": [
+        "contact",
+        "policy",
+        "preview_href"
+      ],
+      "title": "ProviderPanel",
+      "type": "object"
+    },
+    "ProviderRequest": {
+      "additionalProperties": false,
+      "description": "Something a provider asked the firm through their page.",
+      "properties": {
+        "answer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answer"
+        },
+        "answered_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Answered At"
+        },
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "created_at": {
+          "title": "Created At",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "description": "coverage | status | records_needed | payment_timing | other",
+          "title": "Kind",
+          "type": "string"
+        },
+        "question": {
+          "description": "The kind in plain words.",
+          "title": "Question",
+          "type": "string"
+        },
+        "state": {
+          "default": "open",
+          "description": "open | answered | declined",
+          "title": "State",
+          "type": "string"
+        },
+        "suggested": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SuggestedAction"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Never present in a ProviderView."
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The provider's own words, if they added any.",
+          "title": "Text"
+        }
+      },
+      "required": [
+        "id",
+        "contact_id",
+        "kind",
+        "question",
+        "created_at"
+      ],
+      "title": "ProviderRequest",
+      "type": "object"
+    },
+    "ProviderThread": {
+      "additionalProperties": false,
+      "description": "Response of GET /api/matters/{id}/providers/{contact_id}/thread.",
+      "properties": {
+        "requests": {
+          "items": {
+            "$ref": "#/$defs/ProviderRequest"
+          },
+          "title": "Requests",
+          "type": "array"
+        },
+        "thread": {
+          "items": {
+            "$ref": "#/$defs/Message"
+          },
+          "title": "Thread",
+          "type": "array"
+        }
+      },
+      "title": "ProviderThread",
+      "type": "object"
+    },
+    "ProviderView": {
+      "additionalProperties": false,
+      "description": "Exactly what leaves the firm for one provider: the case model projected\nthrough that provider's SharePolicy. Built from the allowlist, so a category\nthat is not listed in `shared_categories` is absent, not blanked. A sent link\nserves the view frozen at send time; only the provider's own replies are live.",
+      "properties": {
+        "alive": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "asks": {
+          "items": {
+            "$ref": "#/$defs/Ask"
+          },
+          "title": "Asks",
+          "type": "array"
+        },
+        "attendance": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Attendance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "attorney_contact": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Email or phone, as the firm wants it shown.",
+          "title": "Attorney Contact"
+        },
+        "attorney_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attorney Name"
+        },
+        "bills": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BillsStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "client_name": {
+          "title": "Client Name",
+          "type": "string"
+        },
+        "content_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "SHA-256 over every field the attorney approves. Send the preview's value back when sharing; the frozen snapshot carries the same value.",
+          "title": "Content Hash"
+        },
+        "contract_version": {
+          "default": "0.12.0",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "coverage": {
+          "$ref": "#/$defs/CoverageSignal"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        },
+        "firm_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Firm Name"
+        },
+        "from_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Who at the firm sent this: the matter's responsible attorney in Clio.",
+          "title": "From Name"
+        },
+        "generated_at": {
+          "title": "Generated At",
+          "type": "string"
+        },
+        "message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Message"
+        },
+        "provider": {
+          "$ref": "#/$defs/Contact"
+        },
+        "records": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RecordsStatus"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "request_kinds": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "kind -> the question to show on the 'Ask the firm' buttons.",
+          "title": "Request Kinds",
+          "type": "object"
+        },
+        "requests": {
+          "description": "This provider's own requests to the firm.",
+          "items": {
+            "$ref": "#/$defs/ProviderRequest"
+          },
+          "title": "Requests",
+          "type": "array"
+        },
+        "shared_categories": {
+          "items": {
+            "$ref": "#/$defs/DisclosureCategory"
+          },
+          "title": "Shared Categories",
+          "type": "array"
+        },
+        "stage": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fact"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "thread": {
+          "description": "Messages between this provider and the firm.",
+          "items": {
+            "$ref": "#/$defs/Message"
+          },
+          "title": "Thread",
+          "type": "array"
+        },
+        "updates": {
+          "items": {
+            "$ref": "#/$defs/TimelineEvent"
+          },
+          "title": "Updates",
+          "type": "array"
+        },
+        "warnings": {
+          "description": "Preview only: things the attorney should weigh.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        },
+        "withheld_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "description": "Preview only: items withheld per category. Empty on the shared link.",
+          "title": "Withheld Counts",
+          "type": "object"
+        }
+      },
+      "required": [
+        "generated_at",
+        "provider",
+        "client_name",
+        "coverage"
+      ],
+      "title": "ProviderView",
+      "type": "object"
+    },
+    "RecordsStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "first_requested": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Requested"
+        },
+        "last_received": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Received"
+        },
+        "pages": {
+          "default": 0,
+          "title": "Pages",
+          "type": "integer"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "state": {
+          "default": "unknown",
+          "description": "unknown | requested | partial | received",
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "title": "RecordsStatus",
+      "type": "object"
+    },
+    "River": {
+      "additionalProperties": false,
+      "properties": {
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/RiverCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "evidence_backed_amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Components of value with a document on file behind them.",
+          "title": "Evidence Backed Amount"
+        },
+        "evidence_backed_share": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "That amount divided by the case value, 0-1. Only as good as the statuses.",
+          "title": "Evidence Backed Share"
+        },
+        "fee_percent": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Firm setting, not read from Clio. Null until set.",
+          "title": "Fee Percent"
+        },
+        "net": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Outflow of the last stage. Before fee when 'fee' is in `unknown`.",
+          "title": "Net"
+        },
+        "reading": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "One paragraph built from a template in code; every figure is one of the river's.",
+          "title": "Reading"
+        },
+        "stages": {
+          "items": {
+            "$ref": "#/$defs/RiverStage"
+          },
+          "title": "Stages",
+          "type": "array"
+        },
+        "unknown": {
+          "description": "Stage ids whose amount is not in the matter.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Unknown",
+          "type": "array"
+        }
+      },
+      "title": "River",
+      "type": "object"
+    },
+    "RiverCheck": {
+      "additionalProperties": false,
+      "description": "A sum checked in code: tick when `ok`, flag when not.",
+      "properties": {
+        "actual": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Actual"
+        },
+        "difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Difference"
+        },
+        "expected": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "node_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Node Ids",
+          "type": "array"
+        },
+        "ok": {
+          "title": "Ok",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "ok"
+      ],
+      "title": "RiverCheck",
+      "type": "object"
+    },
+    "RiverStage": {
+      "additionalProperties": false,
+      "description": "One stage of the value river, left to right. All figures are non-negative\nUSD computed in code: outflow = inflow - diverted, floored at zero. The gate\nlets through min(inflow, confirmed coverage) and diverts the rest. An unknown\namount stays null and the stage passes its inflow through unchanged; the\nstage id is then listed in River.unknown.",
+      "properties": {
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "diverted": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Held back by a gate, or taken out by a lien, cost or fee.",
+          "title": "Diverted"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "inflow": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inflow"
+        },
+        "kind": {
+          "$ref": "#/$defs/NodeKind"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "node_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Node Id"
+        },
+        "outflow": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Outflow"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/FactStatus",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label"
+      ],
+      "title": "RiverStage",
+      "type": "object"
+    },
+    "ShareLogEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "categories": {
+          "items": {
+            "$ref": "#/$defs/DisclosureCategory"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        },
+        "first_opened_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "First Opened At"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "item_count": {
+          "default": 0,
+          "title": "Item Count",
+          "type": "integer"
+        },
+        "last_opened_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Opened At"
+        },
+        "link_href": {
+          "title": "Link Href",
+          "type": "string"
+        },
+        "open_count": {
+          "default": 0,
+          "title": "Open Count",
+          "type": "integer"
+        },
+        "revoke_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "POST to kill the link.",
+          "title": "Revoke Href"
+        },
+        "revoked_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Revoked At"
+        },
+        "sent_at": {
+          "title": "Sent At",
+          "type": "string"
+        },
+        "snapshot_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "GET returns the frozen ProviderView that was sent.",
+          "title": "Snapshot Href"
+        },
+        "state": {
+          "default": "active",
+          "description": "active | expired | revoked | superseded (a newer view was sent on the same link)",
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "contact_id",
+        "link_href",
+        "sent_at"
+      ],
+      "title": "ShareLogEntry",
+      "type": "object"
+    },
+    "SharePolicy": {
+      "additionalProperties": false,
+      "description": "What one provider may see. Edited by the attorney before sharing.",
+      "properties": {
+        "allowed_categories": {
+          "items": {
+            "$ref": "#/$defs/DisclosureCategory"
+          },
+          "title": "Allowed Categories",
+          "type": "array"
+        },
+        "approved_asks": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Ask id -> the wording the attorney approved for this provider. Stored in our database. An ask not listed here is not sent.",
+          "title": "Approved Asks",
+          "type": "object"
+        },
+        "contact_id": {
+          "title": "Contact Id",
+          "type": "integer"
+        },
+        "hidden_item_ids": {
+          "description": "Individual items the attorney removed.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Hidden Item Ids",
+          "type": "array"
+        },
+        "message": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Cover note from the attorney.",
+          "title": "Message"
+        },
+        "updated_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Updated At"
+        }
+      },
+      "required": [
+        "contact_id"
+      ],
+      "title": "SharePolicy",
+      "type": "object"
+    },
+    "SourceDetail": {
+      "additionalProperties": false,
+      "description": "Response of GET {SourceRef.href}: the source itself, for the drawer.",
+      "properties": {
+        "author": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Author"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "file_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The document bytes, served from our cache.",
+          "title": "File Href"
+        },
+        "highlight": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Substring of `text` to highlight (the verified quote).",
+          "title": "Highlight"
+        },
+        "page_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page Count"
+        },
+        "page_image_href": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "PNG render of the document page.",
+          "title": "Page Image Href"
+        },
+        "parties": {
+          "description": "Senders and receivers, attendees, assignee.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Parties",
+          "type": "array"
+        },
+        "ref": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Body text; for a document, the text of `ref.page`.",
+          "title": "Text"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ref",
+        "title"
+      ],
+      "title": "SourceDetail",
+      "type": "object"
+    },
+    "SourceKind": {
+      "description": "Clio object types a fact can point back to.",
+      "enum": [
+        "matter",
+        "custom_field",
+        "contact",
+        "relationship",
+        "note",
+        "communication",
+        "task",
+        "calendar_entry",
+        "expense",
+        "document"
+      ],
+      "title": "SourceKind",
+      "type": "string"
+    },
+    "SourceRef": {
+      "additionalProperties": false,
+      "description": "Where a value on screen came from. Clicking it opens `href`.",
+      "properties": {
+        "clio_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Id of the Clio object, as Clio returns it: an integer, except calendar entries (string). For custom_field, the field definition id.",
+          "title": "Clio Id"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The source item's own date as Clio holds it.",
+          "title": "Date"
+        },
+        "href": {
+          "description": "GET returns a SourceDetail for this reference.",
+          "title": "Href",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/SourceKind"
+        },
+        "label": {
+          "description": "Short chip text: note subject, document name, field name.",
+          "title": "Label",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "1-based PDF page; documents only.",
+          "title": "Page"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Verbatim excerpt supporting the value.",
+          "title": "Quote"
+        },
+        "quote_verified": {
+          "default": false,
+          "description": "True when code found `quote` in the source text. Never set by the model.",
+          "title": "Quote Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "clio_id",
+        "label",
+        "href"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "Spend": {
+      "additionalProperties": false,
+      "properties": {
+        "lines": {
+          "items": {
+            "$ref": "#/$defs/ExpenseLine"
+          },
+          "title": "Lines",
+          "type": "array"
+        },
+        "total": {
+          "default": 0.0,
+          "title": "Total",
+          "type": "number"
+        }
+      },
+      "title": "Spend",
+      "type": "object"
+    },
+    "SuggestedAction": {
+      "additionalProperties": false,
+      "description": "Firm side only: what would answer a provider's request, worked out in code.",
+      "properties": {
+        "action": {
+          "description": "enable_category | resend | reply",
+          "title": "Action",
+          "type": "string"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DisclosureCategory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "action",
+        "label"
+      ],
+      "title": "SuggestedAction",
+      "type": "object"
+    },
+    "SyncResult": {
+      "additionalProperties": false,
+      "description": "Response of POST /api/matters/{matter_id}/sync (a read from Clio into our database).",
+      "properties": {
+        "changed": {
+          "title": "Changed",
+          "type": "integer"
+        },
+        "documents_downloaded": {
+          "default": 0,
+          "title": "Documents Downloaded",
+          "type": "integer"
+        },
+        "kinds": {
+          "additionalProperties": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object"
+          },
+          "description": "Per object type: total, new, updated, removed.",
+          "title": "Kinds",
+          "type": "object"
+        },
+        "matter_id": {
+          "title": "Matter Id",
+          "type": "integer"
+        },
+        "requests": {
+          "title": "Requests",
+          "type": "integer"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "matter_id",
+        "requests",
+        "changed"
+      ],
+      "title": "SyncResult",
+      "type": "object"
+    },
+    "TimelineEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "internal"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Contact Id"
+        },
+        "date": {
+          "title": "Date",
+          "type": "string"
+        },
+        "date_source": {
+          "default": "clio",
+          "description": "'clio' or 'document'; see Claim.date_source.",
+          "title": "Date Source",
+          "type": "string"
+        },
+        "derivation": {
+          "$ref": "#/$defs/Derivation",
+          "default": "clio"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "importance": {
+          "default": 1,
+          "description": "3 = one of the entries that matter.",
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Importance",
+          "type": "integer"
+        },
+        "kind": {
+          "default": "other",
+          "description": "treatment | legal | communication | billing | records | other",
+          "title": "Kind",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "node_deltas": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Node id -> change in USD at this event.",
+          "title": "Node Deltas",
+          "type": "object"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "date",
+        "label"
+      ],
+      "title": "TimelineEvent",
+      "type": "object"
+    },
+    "ValueNode": {
+      "additionalProperties": false,
+      "description": "One term of: net = min(case value, reachable coverage) - liens - costs - fee.",
+      "properties": {
+        "amount": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "USD. For a gate: the amount held back, not the amount let through. Null = unknown, never 0.",
+          "title": "Amount"
+        },
+        "basis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "One line: what the amount rests on.",
+          "title": "Basis"
+        },
+        "category": {
+          "$ref": "#/$defs/DisclosureCategory",
+          "default": "valuation"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "counted": {
+          "default": true,
+          "description": "False for a coverage layer that is shown but adds nothing; `basis` says why.",
+          "title": "Counted",
+          "type": "boolean"
+        },
+        "depends_on": {
+          "description": "Node ids this amount is computed from.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Depends On",
+          "type": "array"
+        },
+        "derivation": {
+          "$ref": "#/$defs/Derivation"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/NodeKind"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "owed_by_contact_id": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Contact who can settle this node, if any.",
+          "title": "Owed By Contact Id"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The node this one is a component of: a tributary of value, or a layer of coverage.",
+          "title": "Parent Id"
+        },
+        "payer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Who would pay it, for a coverage layer.",
+          "title": "Payer"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "status": {
+          "$ref": "#/$defs/FactStatus",
+          "default": "unknown"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "derivation"
+      ],
+      "title": "ValueNode",
+      "type": "object"
+    },
+    "Verdict": {
+      "enum": [
+        "supported",
+        "contradicted",
+        "out_of_date",
+        "not_in_file",
+        "dont_send"
+      ],
+      "title": "Verdict",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Not an API response. Exists so one schema file holds every shape the UI\nreceives: export-schema writes this model's JSON Schema.",
+  "properties": {
+    "card_design_request": {
+      "$ref": "#/$defs/CardDesignRequest"
+    },
+    "card_design_result": {
+      "$ref": "#/$defs/CardDesignResult"
+    },
+    "case": {
+      "$ref": "#/$defs/CaseModel"
+    },
+    "check_request": {
+      "$ref": "#/$defs/CheckRequest"
+    },
+    "check_result": {
+      "$ref": "#/$defs/CheckResult"
+    },
+    "firm_overview": {
+      "$ref": "#/$defs/FirmOverview"
+    },
+    "matters": {
+      "$ref": "#/$defs/MatterList"
+    },
+    "new_case": {
+      "$ref": "#/$defs/NewCase"
+    },
+    "provider_thread": {
+      "$ref": "#/$defs/ProviderThread"
+    },
+    "provider_view": {
+      "$ref": "#/$defs/ProviderView"
+    },
+    "source_detail": {
+      "$ref": "#/$defs/SourceDetail"
+    },
+    "sync_result": {
+      "$ref": "#/$defs/SyncResult"
+    }
+  },
+  "required": [
+    "case",
+    "provider_view",
+    "source_detail",
+    "matters",
+    "sync_result",
+    "new_case",
+    "firm_overview",
+    "provider_thread"
+  ],
+  "title": "ContractBundle",
+  "type": "object"
+}

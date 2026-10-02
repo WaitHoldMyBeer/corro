@@ -1,0 +1,70 @@
+/* The provider page in the colour scheme its reader chose. Load after app.css and v2/css/themes.css.
+   Colours are not defined here: the 6 backgrounds and 7 accents come from themes.css ([data-theme] x [data-accent] on
+   <html>). This file only points the page's own names and its literal colours at those tokens, and styles the small
+   scheme control in the header. Status colours (--ok, --warn, --bad) belong to the background, never to the accent. */
+
+/* sizes the shared swatch styles expect; the firm's design.css, which declares them, is not loaded on this page */
+:root { --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --fs-sm: 13px; --fs-md: 15px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-pill: 999px; --ctl-h-sm: 28px; }
+
+body.provider {
+  /* app.css's names, pointed at the tokens */
+  --bg: var(--n-50); --surface: var(--n-0); --ink: var(--n-900); --muted: var(--n-500); --line: var(--n-200);
+  --stale: var(--n-500); --unknown: var(--n-400); --shadow: var(--e-1);
+  color: var(--n-900); background: var(--n-50);
+}
+body.provider ::selection { background: var(--accent-ring); }
+body.provider :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* app.css rules on this page that paint a literal colour */
+body.provider .btn:not(.primary) { background: var(--n-0); color: var(--n-900); border-color: var(--n-300); }
+body.provider .btn:not(.primary):hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+body.provider .btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+body.provider .btn.primary:hover:not(:disabled) { color: var(--on-accent); border-color: var(--accent-strong); }
+body.provider .btn.primary:hover:not(:disabled) { background: var(--accent-strong); }
+body.provider .btn[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+body.provider textarea { background: var(--n-0); color: var(--n-900); border-color: var(--n-300); }
+body.provider textarea::placeholder { color: var(--n-500); }
+body.provider .pill { background: var(--n-100); color: var(--n-600); }
+body.provider .pill.ok, body.provider .pill.st-confirmed, body.provider .pill.ck-new { background: var(--ok-soft); color: var(--ok); }
+body.provider .pill.warn, body.provider .pill.st-assumed, body.provider .pill.ck-updated { background: var(--warn-soft); color: var(--warn); }
+body.provider .pill.bad, body.provider .pill.st-contested, body.provider .pill.ck-removed { background: var(--bad-soft); color: var(--bad); }
+body.provider .empty, body.provider .pv-fact { background: var(--n-25); }
+body.provider .pv-fact.cov-confirmed { background: var(--ok-soft); border-color: color-mix(in srgb, var(--ok) 35%, transparent); }
+body.provider .pv-fact.cov-being_confirmed { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
+body.provider .pv-fact.cov-not_established { background: var(--bad-soft); border-color: color-mix(in srgb, var(--bad) 35%, transparent); }
+body.provider .msg { background: var(--n-0); }
+body.provider .msg.out { background: var(--accent-soft); border-color: var(--accent-ring); }
+body.provider .toast { background: var(--n-900); color: var(--n-0); }
+body.provider .toast.error { background: var(--bad); color: var(--n-0); }
+/* Small print on a tinted ground (the coverage note with "not a promise of payment", a reply, the firm's note) is set
+   one step stronger than ordinary muted text, so no scheme can soften it. */
+body.provider .pv-fact .muted, body.provider .pv-fact .eyebrow,
+body.provider .reply-done .muted, body.provider .reply-done .eyebrow, body.provider .reply-text .muted,
+body.provider .note-from-firm .muted, body.provider .note-from-firm .eyebrow,
+body.provider .msg.out .muted, body.provider .msg.out .msg-h { color: var(--n-600); }
+
+/* ------------------------------------------------------------------ the scheme control: one quiet button, top right */
+body.provider .top.slim { gap: 10px; }
+body.provider .top.slim > .muted { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+body.provider .pt { position: relative; flex: none; }
+body.provider .pt > button {
+  display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 8px; cursor: pointer; white-space: nowrap;
+  border: 1px solid transparent; border-radius: var(--r-md); background: none; color: var(--n-600); font: inherit; font-size: var(--fs-sm); font-weight: 600;
+}
+body.provider .pt > button:hover, body.provider .pt > button[aria-expanded="true"] { background: var(--n-100); color: var(--n-900); }
+body.provider .pt-pop {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 60; width: min(360px, calc(100vw - 24px)); padding: var(--sp-3);
+  display: flex; flex-direction: column; gap: var(--sp-2); white-space: normal;
+  background: var(--n-0); color: var(--n-900); border: 1px solid var(--n-200); border-radius: var(--r-lg); box-shadow: var(--e-3);
+}
+body.provider .pt-pop[hidden] { display: none; }
+body.provider .pt-pair { font-size: var(--fs-md); font-weight: 650; }
+body.provider .pt-note { margin: 0; font-size: var(--fs-sm); color: var(--n-500); }
+body.provider .pt-pop .th-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+body.provider .pt-pop .th-opt { min-width: 0; }
+body.provider .pt-pop .th-sw { height: 40px; }
+@media (max-width: 560px) {
+  body.provider .pt-name { display: none; }                       /* the pair is still named inside the popover */
+  body.provider .top.slim > .muted { text-align: left; white-space: normal; }
+  body.provider .pt-pop { position: fixed; right: 12px; left: 12px; top: auto; width: auto; margin-top: 8px; }
+}

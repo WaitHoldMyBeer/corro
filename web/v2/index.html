@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/svg+xml" href="/brand/favicon.svg">
+<script>try{var d=document.documentElement,s=localStorage;d.dataset.theme=s.getItem('v2:theme')||'light';d.dataset.accent=s.getItem('v2:accent')||'blue';d.dataset.density=s.getItem('v2:density')||'comfortable'}catch(e){document.documentElement.dataset.theme='light';document.documentElement.dataset.accent='blue'}</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corro</title>
+<link rel="stylesheet" href="css/design.css">
+<link rel="stylesheet" href="../css/app.css">
+<link rel="stylesheet" href="css/shell.css">
+<link rel="stylesheet" href="css/notes-write.css">
+<link rel="stylesheet" href="css/graph.css">
+<link rel="stylesheet" href="css/assistant.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/motion.css">
+</head>
+<body class="v2">
+<div class="v2-app">
+  <nav class="v2-nav" aria-label="Sections">
+    <div class="v2-brand"><a href="#/cases" id="v2-brand-link">Corro</a></div>
+    <div class="v2-matter" id="v2-matter" title="Open matter"></div>
+    <ul id="v2-navlist"></ul>
+    <div class="v2-nav-foot"><a href="#/settings" id="v2-settings">Settings</a><a href="/classic.html" class="v2-classic small">Classic view</a></div>
+  </nav>
+  <div class="v2-main">
+    <header class="v2-top">
+      <span id="v2-status" class="small muted" role="status"></span>
+      <span class="grow"></span>
+      <span id="v2-progress" class="progress" hidden></span>
+      <span id="v2-theme"></span>
+      <span id="v2-actions" class="v2-actions"></span>
+    </header>
+    <div id="v2-view" class="v2-view" aria-busy="true">
+      <div class="v2-skel" aria-hidden="true"><div class="v2-skel-search"></div><div class="v2-skel-hero"></div>
+        <div class="v2-skel-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+    </div>
+  </div>
+</div>
+<script type="module" src="js/theme.js"></script>
+<script type="module" src="js/shell.js"></script>
+</body>
+</html>

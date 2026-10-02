@@ -1,0 +1,15 @@
+/* Compact faces for the evidence cards (a card face is capped by the shell; rows here are one or two lines). */
+.ev-facts.face, .ev-provs.face { gap: 8px; }
+.ev-fact.face, .ev-prov.face { display: block; padding: 0; border: 0; min-width: 0; }
+.ev-line { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; min-width: 0; }
+.ev-line > .ev-grow { flex: 1 1 auto; min-width: 0; }
+.ev-clip { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.ev-fact.face .ev-fact-v { display: block; font-weight: 600; }
+.ev-claimline { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+.ev-claimline > .ev-grow { flex: 1 1 auto; min-width: 0; }
+.cs-sources { display: inline-flex; gap: 4px; align-items: baseline; flex: 0 1 auto; min-width: 0; max-width: 60%; overflow: hidden; }
+.ev-sides .cs-sources { max-width: 100%; flex-wrap: wrap; }
+.ev-claimline .chip-date, .ev-line .chip-date { display: none; }
+.ev-claimline .cs-sources, .ev-line .cs-sources { max-width: 72%; }
+body.v2 .v2-row-meta.ev-claimline { display: flex; gap: 8px; align-items: baseline; }
+body.v2 .ev-claimline .v2-clamp { -webkit-line-clamp: 1; flex: 1 1 auto; min-width: 0; }

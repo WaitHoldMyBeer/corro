@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86 24" width="86" height="24" role="img" aria-label="Corro">
+  <!-- The same lock-up for dark grounds. -->
+  <g fill="none" stroke="#7ea9ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17.23 5.3A8.5 8.5 0 1 0 17.23 18.7"/>
+    <path d="M11 12l3 3 6.5-7.5"/>
+  </g>
+  <text x="31" y="17.5" fill="#f2f4f7" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="-.2">Corro</text>
+</svg>

@@ -1,0 +1,27 @@
+# Case file with medical records: project knowledge, not part of the submission
+Sapini Case Materials/
+Sapini Case Materials-*.zip
+
+# Contain client details, and the mockup is hardcoded sample data: keep both out of the submission
+HANDOFF.md
+mockup/
+
+# Organiser's briefing deck: not ours to publish
+LDG - *.pdf
+
+# Secrets, local databases, caches
+.env*
+!.env.example
+*.db
+*.db-*
+*.sqlite*
+data/
+.conduct/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Submission bundles for the humans: contain the clip, which shows the matter
+submissions/
