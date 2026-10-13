@@ -11,7 +11,9 @@ The mark is an open C closed by a tick: a statement, and the source that corrobo
 
 Corro (from corroborate: every statement in the file is checked against the file) turns a Clio matter into a sourced model of the money (what the case is worth, what coverage can actually pay it, and which open facts stand between the two) and shows that one model to the firm in full and to each treating provider through a disclosure policy the attorney controls.
 
-Built for the Swans Applied AI Hackathon, 2026-10-02. It reads one matter live from Clio Manage and never writes to Clio.
+Built for the Swans Applied AI Hackathon, 2026-10-02, where it placed 2nd. It reads one matter live from Clio Manage and never writes to Clio.
+
+**Live:** [corro.live](https://corro.live/)
 
 This public repository is a single-commit snapshot of our working repository at submission time; the working history holds case-handling notes and internal planning that do not belong in public, so it is not published.
 
